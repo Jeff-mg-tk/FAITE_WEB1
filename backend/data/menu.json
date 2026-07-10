@@ -51,7 +51,7 @@
       "name": "Barrio mixto",
       "price": 19.0,
       "description": "4 alitas, salsa acevichada, papa, camote, chaufa",
-      "image": "./assets/platos/camote.jpeg",
+      "image": "./assets/platos/alitas.jpeg",
       "recommended": false
     },
     {
@@ -106,6 +106,15 @@
       "price": 6.0,
       "description": "",
       "image": "./assets/platos/papas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "camote",
+      "category": "extras",
+      "name": "Camote Extra",
+      "price": 6.0,
+      "description": "",
+      "image": "./assets/platos/camote.jpeg",
       "recommended": false
     },
     {
