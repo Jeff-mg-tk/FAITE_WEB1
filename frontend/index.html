@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' http://127.0.0.1:5001 http://localhost:5001;" />
+
+  <!-- Defensive Security Scripts -->
+  <script>
+    // Clickjacking Defense (Frame Busting)
+    if (self !== top) {
+      top.location = self.location;
+    }
+    // Force HTTPS (when not on localhost)
+    if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      window.location.href = window.location.href.replace('http:', 'https:');
+    }
+  </script>
+  
+  <link rel="icon" href="./assets/favicon.png" type="image/png" />
+  <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+  <title>FAITE - Sabor con Calle</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- jsPDF Library for Complaints Book PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Google Fonts and Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <!-- External Application JS Logic -->
+  <script src="./js/app.js" defer></script>
+</head>
+
+<body>
+
+  <div class="app-container relative">
+
+    <!-- Banner de Horario de Atención -->
+    <div id="hours-banner"
+      class="bg-[#1b1c1c] text-[#f59e0b] text-[11px] font-bold py-2.5 px-4 text-center sticky top-0 z-[60] flex items-center justify-center gap-1.5 border-b border-[#f59e0b]/20">
+      <span class="material-symbols-outlined text-[14px]">info</span>
+      <span>📢 Solo se aceptan pedidos con al menos 1 día de anticipación (Horario de entrega: 3:00 PM - 11:00 PM)</span>
+    </div>
+
+    <!-- PANTALLA 0: HOME / LINKTREE -->
+    <div id="screen-home" class="main-screen">
+      <div class="flex flex-col items-center pt-10 pb-6 px-6 min-h-screen">
+        <!-- Logo Completo -->
+        <div class="mb-8 flex justify-center">
+          <img src="./assets/logo_completo.png" alt="FAITE Logo" class="h-40 object-contain" />
+        </div>
+
+        <p class="text-[13px] text-gray-600 mb-8">Sabor acevichado en cada ala</p>
+
+        <div class="text-[11px] font-bold tracking-wider text-gray-500 uppercase mb-4 text-center w-full">
+          DELIVERY EN CHICLAYO
+        </div>
+
+        <div class="w-full flex flex-col gap-4 mb-8">
+          <!-- Botón Ver Promociones -->
+          <button onclick="switchScreen('promos')"
+            class="w-full bg-white rounded-xl p-4 flex items-center shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors">
+            <span class="material-symbols-outlined text-gray-700 mr-4">notifications</span>
+            <span class="font-medium text-gray-800 flex-1 text-center pr-8">Ver Promociones</span>
+          </button>
+
+          <!-- Botón Ver Carta -->
+          <button onclick="switchScreen('menu')"
+            class="w-full bg-white rounded-xl p-4 flex items-center shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors">
+            <span class="material-symbols-outlined text-gray-700 mr-4">restaurant</span>
+            <span class="font-medium text-gray-800 flex-1 text-center pr-8">Ver Carta Completa</span>
+          </button>
+
+          <!-- Redes Sociales -->
+          <a href="https://www.instagram.com/faiteoficial?igsh=MWNxdXltbnczZnU2dw==" target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-white rounded-xl p-4 flex items-center shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors">
+            <span class="material-symbols-outlined text-gray-700 mr-4">photo_camera</span>
+            <span class="font-medium text-gray-800 flex-1 text-center pr-8">Síguenos en Instagram</span>
+          </a>
+
+          <a href="https://www.facebook.com/share/18tguJmRQJ/" target="_blank" rel="noopener noreferrer"
+            class="w-full bg-white rounded-xl p-4 flex items-center shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors">
+            <span class="material-symbols-outlined text-gray-700 mr-4">public</span>
+            <span class="font-medium text-gray-800 flex-1 text-center pr-8">Síguenos en Facebook</span>
+          </a>
+
+          <a href="https://www.tiktok.com/@faiteoficial?_r=1&_t=ZS-974ek8xrcnM" target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-white rounded-xl p-4 flex items-center shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors">
+            <span class="material-symbols-outlined text-gray-700 mr-4">play_circle</span>
+            <span class="font-medium text-gray-800 flex-1 text-center pr-8">Síguenos en TikTok</span>
+          </a>
+        </div>
+
+        <!-- Pie de página y Enlaces Legales Estilo Shadcnblocks -->
+        <footer
+          class="w-full mt-auto pt-8 pb-6 px-6 bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] text-left">
+          <!-- Top: Logo y Grid de Enlaces -->
+          <div class="flex flex-col gap-6 mb-6">
+            <!-- Logo & Slogan -->
+            <div class="flex flex-col items-start">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="h-8 w-8 object-contain" />
+                <span class="font-serif font-black text-lg tracking-tight">FAITE</span>
+              </div>
+              <p class="text-[12px] text-gray-500 font-medium">Sabor con Calle.</p>
+            </div>
+
+            <!-- Grid de Enlaces (2x2) -->
+            <div class="grid grid-cols-2 gap-x-4 gap-y-6">
+              <!-- Columna 1: Carta -->
+              <div>
+                <h4 class="text-[11px] font-bold text-gray-900 uppercase tracking-wider mb-2">Carta</h4>
+                <ul class="flex flex-col gap-2 text-[12px] text-gray-500 font-medium">
+                  <li><a href="javascript:void(0)" onclick="navigateToMenuCategory('personales')"
+                      class="hover:text-black transition-colors">Personales</a></li>
+                  <li><a href="javascript:void(0)" onclick="navigateToMenuCategory('duos')"
+                      class="hover:text-black transition-colors">Dúos</a></li>
+                  <li><a href="javascript:void(0)" onclick="navigateToMenuCategory('familiares')"
+                      class="hover:text-black transition-colors">Familiares</a></li>
+                  <li><a href="javascript:void(0)" onclick="navigateToMenuCategory('extras')"
+                      class="hover:text-black transition-colors">Extras</a></li>
+                </ul>
+              </div>
+
+              <!-- Columna 2: Empresa -->
+              <div>
+                <h4 class="text-[11px] font-bold text-gray-900 uppercase tracking-wider mb-2">Empresa</h4>
+                <ul class="flex flex-col gap-2 text-[12px] text-gray-500 font-medium">
+                  <li><a href="javascript:void(0)" onclick="openModal('modal-about')"
+                      class="hover:text-black transition-colors">Nosotros</a></li>
+                  <li><a href="javascript:void(0)" onclick="openModal('modal-hours')"
+                      class="hover:text-black transition-colors">Horarios</a></li>
+                  <li><a href="https://wa.me/51913952019" target="_blank" rel="noopener noreferrer"
+                      class="hover:text-black transition-colors">Contacto</a></li>
+                </ul>
+              </div>
+
+              <!-- Columna 3: Soporte -->
+              <div>
+                <h4 class="text-[11px] font-bold text-gray-900 uppercase tracking-wider mb-2">Soporte</h4>
+                <ul class="flex flex-col gap-2 text-[12px] text-gray-500 font-medium">
+                  <li><a href="javascript:void(0)" onclick="openModal('modal-complaints')"
+                      class="hover:text-black transition-colors flex items-center gap-1"><span
+                        class="material-symbols-outlined text-[13px]">book</span> Libro Reclamaciones</a></li>
+                  <li><a href="javascript:void(0)" onclick="openModal('modal-faq')"
+                      class="hover:text-black transition-colors">Preguntas Frecuentes</a></li>
+                  <li><a href="https://wa.me/51913952019" target="_blank" rel="noopener noreferrer"
+                      class="hover:text-black transition-colors">Ayuda</a></li>
+                </ul>
+              </div>
+
+              <!-- Columna 4: Social -->
+              <div>
+                <h4 class="text-[11px] font-bold text-gray-900 uppercase tracking-wider mb-2">Social</h4>
+                <ul class="flex flex-col gap-2 text-[12px] text-gray-500 font-medium">
+                  <li><a href="https://www.instagram.com/faiteoficial?igsh=MWNxdXltbnczZnU2dw==" target="_blank"
+                      rel="noopener noreferrer" class="hover:text-black transition-colors">Instagram</a></li>
+                  <li><a href="https://www.facebook.com/share/18tguJmRQJ/" target="_blank" rel="noopener noreferrer"
+                      class="hover:text-black transition-colors">Facebook</a></li>
+                  <li><a href="https://www.tiktok.com/@faiteoficial?_r=1&_t=ZS-974ek8xrcnM" target="_blank"
+                      rel="noopener noreferrer" class="hover:text-black transition-colors">TikTok</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="border-t border-gray-200/60 my-4"></div>
+
+          <!-- Bottom: Copyright y Legales -->
+          <div class="flex flex-col gap-2 text-center">
+            <p class="text-[10px] text-gray-400">© 2026 FAITE. Todos los derechos reservados.</p>
+            <div class="flex justify-center gap-3 text-[10px] text-gray-400">
+              <a href="javascript:void(0)" onclick="openModal('modal-terms')"
+                class="hover:text-black transition-colors">Términos y Condiciones</a>
+              <span>•</span>
+              <a href="javascript:void(0)" onclick="openModal('modal-privacy')"
+                class="hover:text-black transition-colors">Privacidad</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- PANTALLA 1: MENU -->
+    <div id="screen-menu" class="main-screen hidden">
+      <!-- Header -->
+      <header class="header-bg">
+        <div class="px-6 py-4 flex justify-center items-center relative">
+          <img src="./assets/logo_texto.png" alt="FAITE" class="h-10 object-contain cursor-pointer"
+            onclick="switchScreen('home')" />
+          <div class="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer flex items-center"
+            onclick="switchScreen('orders')">
+            <span class="material-symbols-outlined text-2xl">shopping_cart</span>
+            <span id="cart-badge"
+              class="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Profile -->
+      <div class="hero-section">
+        <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="profile-img bg-white p-0" />
+        <h2 class="text-[22px] font-serif font-black tracking-tight mb-2">Sabor que Inspira</h2>
+        <p class="text-[13px] text-gray-500 max-w-[300px] leading-relaxed">Fusión auténtica de alitas crocantes con el
+          toque refrescante de nuestra salsas.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="px-5 mb-4">
+        <div class="tabs-container">
+          <div class="tab active" onclick="switchTab(this, 'personales')">PERSONALES</div>
+          <div class="tab inactive" onclick="switchTab(this, 'duos')">DÚOS</div>
+          <div class="tab inactive" onclick="switchTab(this, 'familiares')">FAMILIARES</div>
+          <div class="tab inactive" onclick="switchTab(this, 'extras')">EXTRAS</div>
+        </div>
+      </div>
+
+      <!-- Content Sections (Populated via JS) -->
+      <div class="px-5 pb-12">
+        <div id="personales" class="menu-section"></div>
+        <div id="duos" class="menu-section hidden"></div>
+        <div id="familiares" class="menu-section hidden"></div>
+        <div id="extras" class="menu-section hidden"></div>
+      </div>
+
+      <!-- Botón Flotante de Carrito / Pedido -->
+      <div id="cart-bar"
+        class="fixed bottom-[84px] left-5 right-5 max-w-[440px] mx-auto bg-black text-white px-6 py-4 rounded-full flex justify-between items-center shadow-[0_8px_30px_rgba(0,0,0,0.3)] hidden z-40 transition-all duration-300 active:scale-95 cursor-pointer"
+        onclick="switchScreen('orders')">
+        <span class="font-bold text-[13px] tracking-wider">REALIZAR PEDIDO</span>
+        <div class="flex items-center gap-2">
+          <span id="cart-total" class="font-serif font-bold text-[16px]">S/ 0.00</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA 2: ORDERS (Mis Pedidos) -->
+    <div id="screen-orders" class="main-screen hidden">
+      <!-- Header -->
+      <header class="header-bg">
+        <div class="px-6 py-4 flex justify-center items-center relative">
+          <img src="./assets/logo_texto.png" alt="FAITE" class="h-10 object-contain cursor-pointer"
+            onclick="switchScreen('home')" />
+        </div>
+      </header>
+
+      <!-- Title section -->
+      <div class="text-center py-6">
+        <h2 class="text-[28px] font-serif font-black tracking-tight">Mis Pedidos</h2>
+        <p class="text-[13px] text-gray-500">Sigue el estado de tus antojos</p>
+      </div>
+
+      <div class="px-5">
+        <div class="text-center text-[11px] font-bold tracking-wider text-gray-500 uppercase my-4">MI CARRITO ACTUAL
+        </div>
+
+        <!-- Estado Vacío -->
+        <div id="orders-empty-state" class="card text-center py-8">
+          <span class="material-symbols-outlined text-4xl text-gray-300 mb-2">shopping_bag</span>
+          <p class="text-[14px] text-gray-400 font-bold">Tu carrito está vacío</p>
+          <p class="text-[12px] text-gray-400 mt-1">¡Explora el menú y añade tus antojos favoritos!</p>
+          <button onclick="switchScreen('menu')"
+            class="mt-4 bg-black text-white px-6 py-2 rounded-full text-[12px] font-bold">VER MENÚ</button>
+        </div>
+
+        <!-- Tarjeta del carrito cuando tiene items -->
+        <div id="orders-checkout-card" class="card hidden">
+          <div id="orders-items-container">
+            <!-- Items dinámicos del carrito -->
+          </div>
+          <div class="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
+            <span class="font-bold text-[12px] text-gray-400 tracking-wider">TOTAL ESTIMADO</span>
+            <span id="orders-total" class="font-serif font-bold text-[18px]">S/ 0.00</span>
+          </div>
+
+          <!-- Programación de Pedido (Scheduled Orders) -->
+          <div class="border-t border-gray-100 pt-4 mt-4">
+            <span class="font-bold text-[11px] text-gray-400 tracking-wider block mb-3">📅 ¿CUÁNDO DESEAS RECIBIR TU
+              PEDIDO?</span>
+
+            <!-- Panel de Fecha y Hora -->
+            <div id="delivery-scheduler-panel" class="transition-all duration-300">
+              <div class="flex gap-2.5">
+                <!-- Selector de Fecha -->
+                <div class="flex-1">
+                  <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Fecha de entrega</label>
+                  <select id="scheduled-date-select" onchange="onScheduledDateChange()"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[13px] font-bold text-gray-800 focus:outline-none focus:border-black transition-colors">
+                    <!-- Se llena dinámicamente con JS -->
+                  </select>
+                </div>
+                <!-- Selector de Hora -->
+                <div class="flex-1">
+                  <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Hora de entrega</label>
+                  <select id="scheduled-time-select" onchange="onScheduledTimeChange()"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[13px] font-bold text-gray-800 focus:outline-none focus:border-black transition-colors">
+                    <!-- Se llena dinámicamente con JS -->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="checkoutOrder()"
+            class="w-full bg-black text-white py-4 rounded-full font-bold text-[13px] tracking-wider mt-6 active:scale-95 transition-all">REALIZAR
+            PEDIDO</button>
+        </div>
+
+        <!-- Sección de Extras en Orders (Populated dynamically via JS) -->
+        <div id="orders-extras-container"></div>
+      </div>
+    </div>
+
+    <!-- PANTALLA 3: PROMOS -->
+    <div id="screen-promos" class="main-screen hidden">
+      <!-- Header -->
+      <header class="header-bg">
+        <div class="px-6 py-4 flex justify-center items-center relative">
+          <img src="./assets/logo_texto.png" alt="FAITE" class="h-10 object-contain cursor-pointer"
+            onclick="switchScreen('home')" />
+          <div class="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer flex items-center"
+            onclick="switchScreen('orders')">
+            <span class="material-symbols-outlined text-2xl">shopping_cart</span>
+            <span id="cart-badge-promos"
+              class="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="text-center py-6">
+        <h2 class="text-[28px] font-serif font-black tracking-tight">Promos Exclusivas</h2>
+        <p class="text-[13px] text-gray-500">Los mejores descuentos hechos para ti</p>
+      </div>
+
+      <div class="px-5">
+        <div class="card text-center py-12">
+          <span class="material-symbols-outlined text-4xl text-gray-300 mb-2">sell</span>
+          <p class="text-[14px] text-gray-400 font-bold">No hay promociones activas por el momento</p>
+          <p class="text-[12px] text-gray-400 mt-1">¡Pronto tendremos novedades y descuentos exclusivos para ti!</p>
+          <button onclick="switchScreen('menu')"
+            class="mt-4 bg-black text-white px-6 py-2 rounded-full text-[12px] font-bold">VER MENÚ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation: Tubelight Navbar Style -->
+    <nav
+      class="bottom-nav fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md border border-black/[0.04] py-1 px-1 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex items-center gap-1.5 transition-all duration-300">
+      <!-- Slidable Lamp Background -->
+      <div id="nav-lamp"
+        class="absolute bg-black/[0.04] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] -z-10 flex items-start justify-center"
+        style="height: 38px; width: 0px; left: 0px;">
+        <!-- Glowing Tubelight Lamp at the top -->
+        <div class="absolute -top-[1.5px] w-6 h-[2.5px] bg-black rounded-t-full">
+          <div class="absolute w-10 h-4 bg-black/10 rounded-full blur-md -top-1 -left-2"></div>
+        </div>
+      </div>
+
+      <a href="javascript:void(0)" onclick="switchScreen('menu', this)" class="nav-item active" id="nav-btn-menu">
+        <span class="material-symbols-outlined md:hidden" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+        <span class="hidden md:inline">Menu</span>
+      </a>
+      <a href="javascript:void(0)" onclick="switchScreen('orders', this)" class="nav-item" id="nav-btn-orders">
+        <span class="material-symbols-outlined md:hidden">receipt_long</span>
+        <span class="hidden md:inline">Orders</span>
+      </a>
+      <a href="javascript:void(0)" onclick="switchScreen('promos', this)" class="nav-item" id="nav-btn-promos">
+        <span class="material-symbols-outlined md:hidden">sell</span>
+        <span class="hidden md:inline">Promos</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- MODAL: PERSONALIZACIÓN DE PRODUCTO -->
+  <div id="modal-customization" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-customization')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="custom-modal-title" class="font-serif font-black text-[18px]">Personaliza tu plato</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-customization')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1 flex flex-col justify-between h-full">
+        <div>
+          <p id="custom-modal-subtitle" class="text-[12px] text-gray-500 mb-4"></p>
+          <div id="custom-modal-options-container" class="flex flex-col gap-4">
+            <!-- Opciones Dinámicas -->
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-gray-100 pt-4">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[11px] font-bold text-gray-400 tracking-wider">SELECCIÓN</span>
+            <span id="custom-modal-status" class="text-[13px] font-bold">0 / 3</span>
+          </div>
+          <button id="custom-modal-confirm-btn" onclick="confirmCustomization()"
+            class="w-full bg-black text-white py-4 rounded-xl font-bold text-[13px] tracking-wider active:scale-95 transition-all">
+            CONFIRMAR Y AÑADIR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: TERMINOS Y CONDICIONES -->
+  <div id="modal-terms" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-terms')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px]">Términos y Condiciones</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-terms')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1">
+        <p class="font-bold mb-2">1. Horario de Atención</p>
+        <p class="mb-4">Nuestros pedidos a través de la web se procesan de lunes a domingo de 3:00 PM a 11:00 PM.</p>
+
+        <p class="font-bold mb-2">2. Zona de Cobertura y Delivery</p>
+        <p class="mb-4">Realizamos envíos a todo Chiclayo metropolitano. El costo de delivery se calcula según la
+          distancia de tu dirección y se confirmará por WhatsApp.</p>
+
+        <p class="font-bold mb-2">3. Métodos de Pago</p>
+        <p class="mb-4">Aceptamos transferencias bancarias, Yape, Plin y pago contra entrega en efectivo o tarjeta.</p>
+
+        <p class="font-bold mb-2">4. Tiempos de Entrega</p>
+        <p class="mb-4">El tiempo estimado de entrega es de 30 a 50 minutos, dependiendo de la demanda y la distancia de
+          envío.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: POLITICA DE PRIVACIDAD -->
+  <div id="modal-privacy" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-privacy')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px]">Política de Privacidad</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-privacy')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1">
+        <p class="mb-4">En <strong>FAITE</strong> valoramos tu privacidad y la seguridad de tu información personal.</p>
+
+        <p class="font-bold mb-2">Uso de la Información</p>
+        <p class="mb-4">Tus datos personales (nombre, dirección de entrega, pedido y número de contacto) se procesan de
+          forma inmediata a través del chat de WhatsApp únicamente para la preparación y entrega de tu pedido.</p>
+
+        <p class="font-bold mb-2">Almacenamiento y Terceros</p>
+        <p class="mb-4">No almacenamos tus datos en bases de datos comerciales o servidores externos de forma
+          permanente. Tampoco compartimos, alquilamos ni vendemos tu información con ninguna tercera parte.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LIBRO DE RECLAMACIONES -->
+  <div id="modal-complaints" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-complaints')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px]">book</span> Libro de Reclamaciones
+        </h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-complaints')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1">
+        <p class="text-[11px] text-gray-500 mb-4">Conforme a lo establecido en el Código de Protección y Defensa del
+          Consumidor de Perú.</p>
+        <form id="complaints-form" onsubmit="submitComplaint(event)" class="flex flex-col gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">Nombre Completo *</label>
+            <input type="text" id="complaint-name" required
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black"
+              placeholder="Ej. Juan Pérez" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">DNI / CE *</label>
+            <input type="text" id="complaint-dni" required
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black"
+              placeholder="DNI o Carné de Extranjería" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">Teléfono / Celular *</label>
+            <input type="tel" id="complaint-phone" required
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black"
+              placeholder="987654321" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">Correo Electrónico *</label>
+            <input type="email" id="complaint-email" required
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black"
+              placeholder="juan@correo.com" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">Tipo de Reclamación *</label>
+            <select id="complaint-type" required
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black bg-white">
+              <option value="reclamo">Reclamo (Disconformidad con el producto)</option>
+              <option value="queja">Queja (Disconformidad con la atención)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-600 mb-1">Detalle del Reclamo o Queja *</label>
+            <textarea id="complaint-details" required rows="3"
+              class="w-full border border-gray-200 rounded-lg p-2 text-[12px] focus:outline-none focus:border-black resize-none"
+              placeholder="Describe lo sucedido..."></textarea>
+          </div>
+          <button type="submit"
+            class="w-full bg-black text-white py-3 rounded-xl font-bold text-[12px] mt-2 active:scale-95 transition-all">
+            ENVIAR RECLAMACIÓN
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SOBRE NOSOTROS -->
+  <div id="modal-about" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-about')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px]">Sobre Nosotros</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-about')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1">
+        <p class="font-bold mb-2">FAITE - Sabor con Calle</p>
+        <p class="mb-4">Somos un emprendimiento chiclayano apasionado por fusionar el sabor único y refrescante de la
+          salsa acevichada con las alitas más crujientes de la ciudad.</p>
+        <p class="font-bold mb-2">Nuestra Propuesta</p>
+        <p class="mb-4">Creemos en la cocina honesta, con ingredientes frescos y porciones generosas. Llevamos la
+          esencia de la calle y el barrio a tu mesa con combos personales, dúos y familiares ideales para compartir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HORARIOS DE ATENCIÓN -->
+  <div id="modal-hours" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-hours')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px]">Horarios de Atención</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-hours')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1 text-center py-4 flex flex-col items-center">
+        <span class="material-symbols-outlined text-4xl text-amber-500 mb-2">schedule</span>
+        <p class="font-bold text-[16px] mb-2">Todos los días</p>
+        <p class="text-[14px] text-gray-700 font-medium mb-1">3:00 PM a 11:00 PM</p>
+        <p class="text-[11px] text-gray-400 mt-4 leading-normal">Los pedidos web se programan con al menos 1 día de
+          anticipación y se confirman vía WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PREGUNTAS FRECUENTES (FAQ) -->
+  <div id="modal-faq" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-faq')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-serif font-black text-[18px]">Preguntas Frecuentes</h3>
+        <div class="modal-close-btn" onclick="closeModal('modal-faq')">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </div>
+      </div>
+      <div class="modal-body pr-1 flex flex-col gap-4">
+        <div>
+          <p class="font-bold text-[13px] text-gray-900 mb-1">¿Cómo realizo mi pedido?</p>
+          <p class="text-gray-600 text-[12px] leading-relaxed">Selecciona tus productos en la pestaña de "Menú", ve a
+            "Mis Pedidos", selecciona la fecha (mínimo con 1 día de anticipación) y la hora de entrega, y presiona
+            "Realizar Pedido". Te redirigirá a WhatsApp con tu mensaje listo para enviar.</p>
+        </div>
+        <div>
+          <p class="font-bold text-[13px] text-gray-900 mb-1">¿Cuál es el costo del delivery?</p>
+          <p class="text-gray-600 text-[12px] leading-relaxed">El costo de delivery varía según la zona de Chiclayo
+            donde te encuentres. Se cotizará y confirmará una vez compartas tu ubicación por WhatsApp.</p>
+        </div>
+        <div>
+          <p class="font-bold text-[13px] text-gray-900 mb-1">¿Qué métodos de pago aceptan?</p>
+          <p class="text-gray-600 text-[12px] leading-relaxed">Aceptamos Yape, Plin, transferencias bancarias y pago
+            contra entrega (efectivo o tarjeta).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

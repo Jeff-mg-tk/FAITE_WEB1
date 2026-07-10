@@ -1,0 +1,306 @@
+body {
+  background-color: #f5f3f3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1b1c1c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.font-serif {
+  font-family: 'Roboto Slab', serif;
+}
+
+.header-bg {
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  margin-bottom: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.btn-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.btn-minus {
+  border: 1px solid #c4c7c7;
+  color: #1b1c1c;
+  background: white;
+}
+
+.btn-plus {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+}
+
+.tabs-container {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 8px 0;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.tab.inactive {
+  background-color: #ffffff;
+  color: #1b1c1c;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #444748;
+  text-transform: uppercase;
+  margin: 32px 0 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  height: 1px;
+  background-color: #c4c7c7;
+  flex-grow: 1;
+  margin: 0 16px;
+  opacity: 0.5;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #747878;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  transition: color 0.3s, transform 0.2s;
+  user-select: none;
+}
+
+.nav-item.active {
+  color: #000000 !important;
+}
+
+.nav-item .material-symbols-outlined {
+  font-size: 18px;
+  transition: font-variation-settings 0.3s;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #f5f3f3;
+  min-height: 100vh;
+  padding-bottom: 150px;
+}
+
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 20px 20px 20px;
+}
+
+.profile-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: contain;
+  border: 3px solid white;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.tag-recomendado {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-body {
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #444748;
+  flex-grow: 1;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f5f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1b1c1c;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background-color: #e5e3e3;
+}
+
+/* --- RESPONSIVE GRID AND LAYOUT UPGRADES --- */
+
+/* Constrain linktree home page content width for mobile look on all screens */
+#screen-home > div {
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Constrain menu and order screen contents on wider devices */
+#screen-menu, #screen-orders, #screen-promos {
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Constrain the checkout form cards on desktops so fields don't overstretch */
+#orders-checkout-card {
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Center menu tab buttons on wider viewports */
+@media (min-width: 640px) {
+  .tabs-container {
+    justify-content: center;
+  }
+}
+
+/* Set menu sections to CSS Grid layout */
+.menu-section, #orders-extras-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Ensure the section titles span the entire grid row */
+.section-title {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* Responsive columns: 2 columns on tablets/small screens, 3 columns on desktops */
+@media (min-width: 640px) {
+  .menu-section, #orders-extras-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-section, #orders-extras-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+

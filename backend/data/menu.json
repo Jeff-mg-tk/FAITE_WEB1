@@ -1,0 +1,269 @@
+{
+  "products": [
+    {
+      "id": "laesquinabbq",
+      "category": "personales",
+      "name": "La Esquina BBQ",
+      "price": 16.0,
+      "description": "5 alitas, salsa BBQ ahumada, papas, camote",
+      "image": "./assets/platos/alitasbbq.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "fuego",
+      "category": "personales",
+      "name": "Fuego de Barrio",
+      "price": 16.0,
+      "description": "5 alitas, salsa acevichada picante, papas, camote",
+      "image": "./assets/platos/alitas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "ruta",
+      "category": "personales",
+      "name": "Ruta Suave",
+      "price": 16.0,
+      "description": "5 alitas, salsa acevichada simple, papas, camote",
+      "image": "./assets/platos/alitas1.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "amazonica",
+      "category": "personales",
+      "name": "Salsa Amazónica",
+      "price": 16.0,
+      "description": "5 alitas, salsa amazónica, papas, camote",
+      "image": "./assets/platos/alitas2.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "tour",
+      "category": "personales",
+      "name": "Tour de Sabores",
+      "price": 21.0,
+      "description": "6 alitas, 3 salsas, papas, camote",
+      "image": "./assets/platos/alitas.jpeg",
+      "recommended": true
+    },
+    {
+      "id": "barriomixto",
+      "category": "personales",
+      "name": "Barrio mixto",
+      "price": 19.0,
+      "description": "4 alitas, salsa acevichada, papa, camote, chaufa",
+      "image": "./assets/platos/camote.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "combocallejero",
+      "category": "personales",
+      "name": "Combo Callejero",
+      "price": 22.0,
+      "description": "5 alitas, salsa acevichada, papa, camote, chaufa",
+      "image": "./assets/platos/alitas1.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "duocalle",
+      "category": "duos",
+      "name": "Dúo de la Calle",
+      "price": 30.0,
+      "description": "10 alitas, 2 sabores, papas, camote",
+      "image": "./assets/platos/alitas2.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "duplabrava",
+      "category": "duos",
+      "name": "Dupla Brava",
+      "price": 35.0,
+      "description": "12 alitas, 3 sabores, papas, camote",
+      "image": "./assets/platos/alitas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "mesabrava",
+      "category": "familiares",
+      "name": "Mesa Brava",
+      "price": 52.0,
+      "description": "20 alitas, 3 sabores, papas, camote",
+      "image": "./assets/platos/alitas1.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "fogonsupremo",
+      "category": "familiares",
+      "name": "Fogón Supremo",
+      "price": 70.0,
+      "description": "30 alitas, 3 sabores, papas, camote",
+      "image": "./assets/platos/alitas2.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "papas",
+      "category": "extras",
+      "name": "Papas Extra",
+      "price": 6.0,
+      "description": "",
+      "image": "./assets/platos/papas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "chaufa",
+      "category": "extras",
+      "name": "Chaufa Extra",
+      "price": 10.0,
+      "description": "",
+      "image": "./assets/platos/chaufa.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "salsas",
+      "category": "extras",
+      "name": "Salsas",
+      "price": 2.0,
+      "description": "Salsa acevichada, salsa amazónica o salsa BBQ",
+      "image": "./assets/platos/salsas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "chichamorada",
+      "category": "extras",
+      "name": "Chicha Morada",
+      "price": 2.5,
+      "description": "600ml",
+      "image": "./assets/platos/chichamorada.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "chichamaracuya",
+      "category": "extras",
+      "name": "Chicha de Maracuyá",
+      "price": 2.5,
+      "description": "600ml",
+      "image": "./assets/platos/chichamaracuya.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "inkacola",
+      "category": "extras",
+      "name": "Inka Cola",
+      "price": 4.0,
+      "description": "600ml",
+      "image": "./assets/platos/inkacola.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "cocacola",
+      "category": "extras",
+      "name": "CocaCola",
+      "price": 4.0,
+      "description": "600ml",
+      "image": "./assets/platos/cocacola.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "alita",
+      "category": "extras",
+      "name": "1 Alita",
+      "price": 2.5,
+      "description": "Alita adicional",
+      "image": "./assets/platos/alitassolas.jpeg",
+      "recommended": false
+    }
+  ],
+  "customizations": {
+    "tour": {
+      "title": "Personaliza tu Tour de Sabores",
+      "subtitle": "Elige exactamente 3 salsas para tus 6 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 3,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "duocalle": {
+      "title": "Personaliza tu Dúo de la Calle",
+      "subtitle": "Elige exactamente 2 salsas para tus 10 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 2,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "duplabrava": {
+      "title": "Personaliza tu Dupla Brava",
+      "subtitle": "Elige exactamente 3 salsas para tus 12 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 3,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "mesabrava": {
+      "title": "Personaliza tu Mesa Brava",
+      "subtitle": "Elige exactamente 3 salsas para tus 20 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 3,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "fogonsupremo": {
+      "title": "Personaliza tu Fogón Supremo",
+      "subtitle": "Elige exactamente 3 salsas para tus 30 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 3,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "barriomixto": {
+      "title": "Personaliza tu Barrio mixto",
+      "subtitle": "Elige 1 salsa para tus alitas",
+      "type": "select-one",
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "combocallejero": {
+      "title": "Personaliza tu Combo Callejero",
+      "subtitle": "Elige 1 salsa para tus alitas",
+      "type": "select-one",
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "salsas": {
+      "title": "Elige tu Salsa Extra",
+      "subtitle": "Selecciona una opción",
+      "type": "select-one",
+      "options": [
+        { "key": "acevichada", "label": "Salsa Acevichada" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    }
+  }
+}
