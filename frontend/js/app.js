@@ -294,9 +294,9 @@ function switchScreen(screenName, el) {
   const bottomNav = document.querySelector('.bottom-nav');
   if (bottomNav) {
     if (screenName === 'home') {
-      bottomNav.classList.add('hidden');
+      bottomNav.style.display = 'none';
     } else {
-      bottomNav.classList.remove('hidden');
+      bottomNav.style.display = 'flex';
     }
   }
 
