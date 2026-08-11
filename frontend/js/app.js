@@ -47,6 +47,7 @@ async function initApp() {
     initDateSelect();
     populateTimeSlots();
     checkStoreHours();
+    loadPromos();
     
     // Auto-refresh store hours every 2 minutes
     setInterval(checkStoreHours, 120000);
@@ -327,6 +328,10 @@ function switchScreen(screenName, el) {
     renderCartItems();
   }
 
+  if (screenName === 'menu') {
+    showFirstPurchasePopup();
+  }
+
   updateCartState();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -449,6 +454,11 @@ function checkoutOrder() {
   const encodedText = encodeURIComponent(text);
   const whatsappUrl = `https://wa.me/51913952019?text=${encodedText}`;
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+  // Mark first purchase promo as used
+  localStorage.setItem('faite_first_promo_used', 'true');
+  const fpContainer = document.getElementById('promo-first-purchase-container');
+  if (fpContainer) fpContainer.innerHTML = '';
 }
 
 function navigateToMenuCategory(category) {
@@ -873,4 +883,269 @@ function confirmCustomization() {
 
   updateCustomQty(cartKey, 1);
   closeModal('modal-customization');
+}
+
+// =========================================
+// PROMOTIONS SYSTEM
+// =========================================
+
+async function loadPromos() {
+  try {
+    const response = await fetch(`${API_URL}/api/promos`);
+    if (!response.ok) throw new Error('Could not load promos');
+    const data = await response.json();
+    const activePromos = filterPromos(data.promos || []);
+    renderPromos(activePromos);
+  } catch (e) {
+    console.warn('Promos could not be loaded:', e);
+    // Show empty state gracefully
+    const emptyState = document.getElementById('promos-empty-state');
+    if (emptyState) emptyState.classList.remove('hidden');
+  }
+}
+
+function filterPromos(promos) {
+  const now = new Date();
+  
+  return promos.filter(promo => {
+    if (!promo.active) return false;
+    
+    switch (promo.type) {
+      case 'first_purchase':
+        return localStorage.getItem('faite_first_promo_used') !== 'true';
+      
+      case 'time_limited':
+        if (promo.startDate && new Date(promo.startDate) > now) return false;
+        if (promo.endDate && new Date(promo.endDate + 'T23:59:59') < now) return false;
+        return true;
+      
+      case 'permanent':
+      default:
+        return true;
+    }
+  });
+}
+
+function renderPromos(promos) {
+  const fpContainer = document.getElementById('promo-first-purchase-container');
+  const promosContainer = document.getElementById('promos-container');
+  const emptyState = document.getElementById('promos-empty-state');
+  
+  if (!promosContainer) return;
+  
+  // Separate first_purchase promo from the rest
+  const firstPurchasePromo = promos.find(p => p.type === 'first_purchase');
+  const regularPromos = promos.filter(p => p.type !== 'first_purchase');
+  
+  // Render first purchase card (special placement)
+  if (fpContainer && firstPurchasePromo) {
+    fpContainer.innerHTML = renderFirstPurchaseCard(firstPurchasePromo);
+  }
+  
+  // Render regular promo cards
+  if (regularPromos.length > 0) {
+    promosContainer.innerHTML = regularPromos.map(promo => {
+      if (promo.id === 'fidelidad') return renderLoyaltyCard(promo);
+      if (promo.id === 'happy_hour') return renderHappyHourCard(promo);
+      return renderPromoCard(promo);
+    }).join('');
+  }
+  
+  // Show/hide empty state
+  const totalVisible = (firstPurchasePromo ? 1 : 0) + regularPromos.length;
+  if (emptyState) {
+    if (totalVisible === 0) {
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+    }
+  }
+}
+
+function renderFirstPurchaseCard(promo) {
+  const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  
+  return `
+    <div class="promo-first-purchase" id="promo-fp-card">
+      <div class="relative z-10">
+        <span class="promo-badge" style="background: #B45309;">
+          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
+          ${promo.badge}
+        </span>
+        <h3 class="promo-card-title">${promo.title}</h3>
+        <p class="promo-card-subtitle">${promo.subtitle}</p>
+        <p class="promo-card-desc">${promo.description}</p>
+        ${promo.code ? `
+          <div class="promo-code-box">
+            <span class="promo-code-label">Código:</span>
+            <span>${promo.code}</span>
+          </div>
+        ` : ''}
+        <ul class="promo-conditions">${conditionsHtml}</ul>
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <button class="promo-cta" onclick="switchScreen('menu')">
+            <span class="material-symbols-outlined" style="font-size: 15px;">restaurant</span>
+            VER MENÚ
+          </button>
+          <button class="promo-dismiss" onclick="dismissFirstPurchasePromo()">
+            Ya no me interesa
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPromoCard(promo) {
+  const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  const priceHtml = promo.promoPrice ? `<div class="promo-price" style="color: ${promo.highlight};">${promo.promoPrice}</div>` : '';
+  
+  let timeBadgeHtml = '';
+  if (promo.type === 'time_limited' && promo.endDate) {
+    timeBadgeHtml = `
+      <div class="promo-time-badge">
+        <span class="material-symbols-outlined">timer</span>
+        Válido hasta ${formatPromoDate(promo.endDate)}
+      </div>
+    `;
+  }
+  
+  return `
+    <div class="promo-card">
+      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+      <div class="promo-card-body">
+        <span class="promo-badge" style="background: ${promo.highlight};">
+          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
+          ${promo.badge}
+        </span>
+        ${timeBadgeHtml}
+        <h3 class="promo-card-title">${promo.title}</h3>
+        <p class="promo-card-subtitle">${promo.subtitle}</p>
+        <p class="promo-card-desc">${promo.description}</p>
+        ${priceHtml}
+        <ul class="promo-conditions">${conditionsHtml}</ul>
+        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
+          PEDIR ESTA PROMO
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderHappyHourCard(promo) {
+  const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  
+  // Check if currently in happy hour (3PM-5PM Peru time)
+  const now = new Date();
+  // Use Peru timezone offset (-5 hours from UTC)
+  const peruOffset = -5;
+  const utcHour = now.getUTCHours();
+  const peruHour = (utcHour + peruOffset + 24) % 24;
+  const isHappyHour = peruHour >= 15 && peruHour < 17;
+  
+  const statusHtml = isHappyHour 
+    ? `<div class="promo-happy-active"><span class="material-symbols-outlined" style="font-size: 12px;">circle</span> ¡ACTIVO AHORA!</div>`
+    : `<div class="promo-happy-inactive"><span class="material-symbols-outlined" style="font-size: 12px;">schedule</span> Disponible de 3PM a 5PM</div>`;
+  
+  return `
+    <div class="promo-card">
+      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+      <div class="promo-card-body">
+        <span class="promo-badge" style="background: ${promo.highlight};">
+          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
+          ${promo.badge}
+        </span>
+        ${statusHtml}
+        <h3 class="promo-card-title">${promo.title}</h3>
+        <p class="promo-card-subtitle">${promo.subtitle}</p>
+        <p class="promo-card-desc">${promo.description}</p>
+        <ul class="promo-conditions">${conditionsHtml}</ul>
+        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
+          PEDIR ESTA PROMO
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderLoyaltyCard(promo) {
+  const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  
+  // Build the 5 + 1 loyalty dots visual
+  let dotsHtml = '';
+  for (let i = 1; i <= 5; i++) {
+    dotsHtml += `<div class="promo-loyalty-dot">${i}</div>`;
+    if (i < 5) dotsHtml += `<span class="promo-loyalty-arrow">›</span>`;
+  }
+  dotsHtml += `<span class="promo-loyalty-arrow">›</span>`;
+  dotsHtml += `<div class="promo-loyalty-dot gift"><span class="material-symbols-outlined" style="font-size: 16px;">redeem</span></div>`;
+  
+  return `
+    <div class="promo-card">
+      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+      <div class="promo-card-body">
+        <span class="promo-badge" style="background: ${promo.highlight};">
+          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
+          ${promo.badge}
+        </span>
+        <h3 class="promo-card-title">${promo.title}</h3>
+        <p class="promo-card-subtitle">${promo.subtitle}</p>
+        <p class="promo-card-desc">${promo.description}</p>
+        <div class="promo-loyalty-dots">${dotsHtml}</div>
+        <ul class="promo-conditions">${conditionsHtml}</ul>
+        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <span class="material-symbols-outlined" style="font-size: 15px;">chat</span>
+          CONSULTAR MI PROGRESO
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function dismissFirstPurchasePromo() {
+  localStorage.setItem('faite_first_promo_used', 'true');
+
+  // Close the popup modal if open
+  closeModal('modal-first-promo');
+
+  // Also remove the card from promos section if present
+  const fpCard = document.getElementById('promo-fp-card');
+  if (fpCard) {
+    fpCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    fpCard.style.opacity = '0';
+    fpCard.style.transform = 'translateY(-10px)';
+    setTimeout(() => {
+      const container = document.getElementById('promo-first-purchase-container');
+      if (container) container.innerHTML = '';
+      // Check if we still have other promos visible
+      const promosContainer = document.getElementById('promos-container');
+      const emptyState = document.getElementById('promos-empty-state');
+      if (promosContainer && promosContainer.children.length === 0 && emptyState) {
+        emptyState.classList.remove('hidden');
+      }
+    }, 400);
+  }
+}
+
+function showFirstPurchasePopup() {
+  if (localStorage.getItem('faite_first_promo_used') === 'true') return;
+  // Show after a short delay for better UX
+  setTimeout(() => {
+    openModal('modal-first-promo');
+  }, 1500);
+}
+
+function promoOrderWhatsApp(promoId, promoTitle) {
+  const text = `¡Hola! Me interesa la promoción *"${promoTitle}"* que vi en su página web. ¿Podrían darme más detalles para pedirla?`;
+  const encodedText = encodeURIComponent(text);
+  const whatsappUrl = `https://wa.me/51913952019?text=${encodedText}`;
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+}
+
+function formatPromoDate(dateStr) {
+  const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  const d = new Date(dateStr + 'T00:00:00');
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }

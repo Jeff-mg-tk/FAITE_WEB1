@@ -1,0 +1,164 @@
+{
+  "promos": [
+    {
+      "id": "primera_vez",
+      "title": "Primera Vez FAITE",
+      "subtitle": "¡Bienvenido a la familia!",
+      "description": "Obtén un 15% de descuento en tu primer pedido. Solo menciónalo al hacer tu pedido por WhatsApp.",
+      "badge": "NUEVO CLIENTE",
+      "icon": "celebration",
+      "type": "first_purchase",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#F59E0B",
+      "conditions": [
+        "Válido solo para tu primer pedido",
+        "Menciona el código PRIMERAVEZ en WhatsApp",
+        "No acumulable con otras promociones"
+      ],
+      "code": "PRIMERAVEZ",
+      "active": true
+    },
+    {
+      "id": "combo_amigos",
+      "title": "Combo Día de Amigos",
+      "subtitle": "Comparte con tu pata",
+      "description": "Pide un Dúo de la Calle o Dupla Brava y llévate 2 Chichas Moradas completamente GRATIS.",
+      "badge": "DÚO + REGALO",
+      "icon": "group",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#3B82F6",
+      "conditions": [
+        "Aplica para Dúo de la Calle (S/ 30) o Dupla Brava (S/ 35)",
+        "Incluye 2 Chichas Moradas de 600ml gratis",
+        "Menciona la promo al pedir por WhatsApp"
+      ],
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "happy_hour",
+      "title": "Happy Hour",
+      "subtitle": "+1 alita gratis en tu combo",
+      "description": "De 3:00 PM a 5:00 PM, cualquier combo personal incluye 1 alita extra totalmente gratis.",
+      "badge": "3PM - 5PM",
+      "icon": "schedule",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#EF4444",
+      "conditions": [
+        "Válido de 3:00 PM a 5:00 PM todos los días",
+        "Aplica para cualquier combo personal",
+        "+1 alita extra gratis en tu combo"
+      ],
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "familiar_fds",
+      "title": "Promo Familiar Fin de Semana",
+      "subtitle": "La mesa está puesta",
+      "description": "Mesa Brava (20 alitas) + Chaufa Extra + 2 bebidas a elegir, todo por solo S/ 59.90. ¡Ahorras más de S/ 10!",
+      "badge": "VIE - DOM",
+      "icon": "family_restroom",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#8B5CF6",
+      "conditions": [
+        "Válido solo viernes, sábado y domingo",
+        "Incluye: Mesa Brava + Chaufa Extra + 2 chichas",
+        "Chichas a elegir: Chicha Morada o Chicha de Maracuyá",
+        "Precio regular: ~S/ 67.00 → Promo: S/ 59.90"
+      ],
+      "promoPrice": "S/ 59.90",
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "docena_alitas",
+      "title": "Alitas x Docena",
+      "subtitle": "Más alitas, mejor precio",
+      "description": "12 alitas sueltas con la salsa de tu elección por solo S/ 25. Ideal para compartir a tu estilo.",
+      "badge": "12 ALITAS",
+      "icon": "local_fire_department",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#F97316",
+      "conditions": [
+        "12 alitas con 1 salsa a elegir",
+        "Salsas disponibles: Acevichada, Amazónica o BBQ",
+        "No incluye acompañamientos (papas/camote aparte)",
+        "Precio por alita: ~S/ 2.08"
+      ],
+      "promoPrice": "S/ 25.00",
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "combo_cumple",
+      "title": "Combo Cumpleaños",
+      "subtitle": "Celebra a lo grande",
+      "description": "Fogón Supremo (30 alitas, 3 sabores) + 2 Chaufas Extra + 4 bebidas a elegir, todo por S/ 89.90.",
+      "badge": "FIESTA",
+      "icon": "cake",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#EC4899",
+      "conditions": [
+        "Incluye: Fogón Supremo (30 alitas) + 2 Chaufas + 4 chichas",
+        "Chichas a elegir: Chicha Morada o Chicha de Maracuyá",
+        "Precio regular: ~S/ 100.00 → Promo: S/ 89.90",
+        "Ideal para reuniones y celebraciones"
+      ],
+      "promoPrice": "S/ 89.90",
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "fidelidad",
+      "title": "Programa de Fidelidad",
+      "subtitle": "Tu lealtad tiene premio",
+      "description": "Por cada 5 pedidos que realices, tu 6to combo personal es completamente GRATIS. ¡Acumula y disfruta!",
+      "badge": "FIDELIDAD",
+      "icon": "loyalty",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#10B981",
+      "conditions": [
+        "Aplica para combos personales",
+        "Se lleva registro por WhatsApp",
+        "El combo gratis es de igual o menor valor al más pedido",
+        "Sin fecha de expiración para tus pedidos acumulados"
+      ],
+      "code": null,
+      "active": true
+    },
+    {
+      "id": "combo_pareja",
+      "title": "Combo Pareja",
+      "subtitle": "Amor con sabor",
+      "description": "2 combos personales (a elegir) por solo S/ 39.90. Perfecto para dos.",
+      "badge": "PARA DOS",
+      "icon": "favorite",
+      "type": "permanent",
+      "startDate": null,
+      "endDate": null,
+      "highlight": "#E11D48",
+      "conditions": [
+        "Incluye: 2 combos personales a elegir",
+        "Combos disponibles: La Esquina BBQ, Fuego de Barrio, Ruta Suave o Salsa Amazónica",
+        "Precio regular: ~S/ 32.00 → Promo: S/ 39.90 por los dos"
+      ],
+      "promoPrice": "S/ 39.90",
+      "code": null,
+      "active": true
+    }
+  ]
+}

@@ -344,8 +344,15 @@
         <p class="text-[13px] text-gray-500">Los mejores descuentos hechos para ti</p>
       </div>
 
-      <div class="px-5">
-        <div class="card text-center py-12">
+      <div class="px-5 pb-12">
+        <!-- First Purchase Promo (special placement) -->
+        <div id="promo-first-purchase-container"></div>
+
+        <!-- All other promos -->
+        <div id="promos-container" class="promos-grid"></div>
+
+        <!-- Empty state (shown when no promos are active) -->
+        <div id="promos-empty-state" class="card text-center py-12 hidden">
           <span class="material-symbols-outlined text-4xl text-gray-300 mb-2">sell</span>
           <p class="text-[14px] text-gray-400 font-bold">No hay promociones activas por el momento</p>
           <p class="text-[12px] text-gray-400 mt-1">¡Pronto tendremos novedades y descuentos exclusivos para ti!</p>
@@ -593,6 +600,48 @@
           <p class="font-bold text-[13px] text-gray-900 mb-1">¿Qué métodos de pago aceptan?</p>
           <p class="text-gray-600 text-[12px] leading-relaxed">Aceptamos Yape, Plin, transferencias bancarias y pago
             contra entrega (efectivo o tarjeta).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: PROMO PRIMERA VEZ (Popup automático) -->
+  <div id="modal-first-promo" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-first-promo')">
+    <div class="modal-card promo-popup-card">
+      <div class="promo-popup-glow"></div>
+      <div class="relative z-10">
+        <div class="flex justify-end mb-1">
+          <div class="modal-close-btn" onclick="dismissFirstPurchasePromo()">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+          </div>
+        </div>
+        <div class="text-center">
+          <span class="material-symbols-outlined text-[48px] text-amber-600 mb-2">celebration</span>
+          <span class="promo-badge inline-flex mx-auto" style="background: #B45309;">
+            <span class="material-symbols-outlined" style="font-size: 11px;">verified</span>
+            NUEVO CLIENTE
+          </span>
+          <h3 class="font-serif font-black text-[24px] text-amber-900 mt-3 mb-1">¡Primera Vez FAITE!</h3>
+          <p class="text-[13px] text-amber-800 font-semibold mb-3">¡Bienvenido a la familia!</p>
+          <p class="text-[13px] text-amber-900/80 leading-relaxed mb-4">Obtén un <strong>15% de descuento</strong> en tu primer pedido. Solo menciónalo al pedir por WhatsApp.</p>
+          <div class="promo-code-box mx-auto" style="background: rgba(255,255,255,0.5); border-color: #B45309;">
+            <span class="promo-code-label">Código:</span>
+            <span>PRIMERAVEZ</span>
+          </div>
+          <ul class="promo-conditions text-left mt-4 mb-5 max-w-[280px] mx-auto">
+            <li>Válido solo para tu primer pedido</li>
+            <li>Menciona el código al pedir por WhatsApp</li>
+            <li>No acumulable con otras promociones</li>
+          </ul>
+          <button class="promo-cta w-full justify-center py-3" onclick="dismissFirstPurchasePromo(); switchScreen('menu');">
+            <span class="material-symbols-outlined" style="font-size: 15px;">restaurant</span>
+            VER MENÚ Y PEDIR
+          </button>
+          <button class="promo-dismiss block mx-auto mt-2 text-[11px] text-amber-700 font-semibold opacity-70 hover:opacity-100 transition-opacity cursor-pointer bg-transparent border-none py-2"
+            onclick="dismissFirstPurchasePromo()">
+            No me interesa, gracias
+          </button>
         </div>
       </div>
     </div>

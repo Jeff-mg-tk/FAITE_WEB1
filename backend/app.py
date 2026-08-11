@@ -35,6 +35,19 @@ def get_menu():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/promos")
+def get_promos():
+    """Returns the active promotions."""
+    promos_path = os.path.join(backend_dir, "data", "promos.json")
+    try:
+        with open(promos_path, "r", encoding="utf-8") as f:
+            promos_data = json.load(f)
+        return jsonify(promos_data)
+    except FileNotFoundError:
+        return jsonify({"promos": []}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/store-status")
 def store_status():
     """Calculates if the store is currently open (3:00 PM to 11:00 PM in Peru GMT-5)."""

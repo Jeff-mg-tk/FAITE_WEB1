@@ -303,4 +303,394 @@ body {
 }
 
 
+/* =========================================
+   PROMOS SECTION STYLES
+   ========================================= */
+
+/* Responsive grid for promo cards */
+.promos-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .promos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Base promo card */
+.promo-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: promoFadeIn 0.5s ease forwards;
+}
+
+.promo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Staggered animation delays */
+.promo-card:nth-child(1) { animation-delay: 0.05s; }
+.promo-card:nth-child(2) { animation-delay: 0.1s; }
+.promo-card:nth-child(3) { animation-delay: 0.15s; }
+.promo-card:nth-child(4) { animation-delay: 0.2s; }
+.promo-card:nth-child(5) { animation-delay: 0.25s; }
+.promo-card:nth-child(6) { animation-delay: 0.3s; }
+.promo-card:nth-child(7) { animation-delay: 0.35s; }
+.promo-card:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes promoFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Color accent bar on left side */
+.promo-card-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 20px 0 0 20px;
+}
+
+/* Promo card body */
+.promo-card-body {
+  padding: 20px 20px 20px 24px;
+}
+
+/* Badge pill */
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* Promo title */
+.promo-card-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: #1b1c1c;
+  margin: 10px 0 2px;
+  letter-spacing: -0.3px;
+}
+
+/* Promo subtitle */
+.promo-card-subtitle {
+  font-size: 12px;
+  color: #747878;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Promo description */
+.promo-card-desc {
+  font-size: 13px;
+  color: #444748;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* Promo price highlight */
+.promo-price {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 900;
+  font-size: 22px;
+  margin: 8px 0;
+}
+
+/* Conditions list */
+.promo-conditions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.promo-conditions li {
+  font-size: 11px;
+  color: #747878;
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.promo-conditions li::before {
+  content: "✓";
+  font-weight: 800;
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Promo code box */
+.promo-code-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f3f3;
+  border: 1.5px dashed #c4c7c7;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+.promo-code-box span {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: #1b1c1c;
+}
+
+.promo-code-label {
+  font-size: 10px;
+  color: #747878;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* CTA Button */
+.promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1b1c1c;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.promo-cta:active {
+  transform: scale(0.95);
+}
+
+/* ---- FIRST PURCHASE SPECIAL CARD ---- */
+.promo-first-purchase {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
+  border-radius: 24px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: promoFadeIn 0.6s ease forwards;
+}
+
+.promo-first-purchase::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.promo-first-purchase::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+}
+
+.promo-first-purchase .promo-card-title {
+  font-size: 22px;
+  color: #78350F;
+}
+
+.promo-first-purchase .promo-card-subtitle {
+  color: #92400E;
+}
+
+.promo-first-purchase .promo-card-desc {
+  color: #78350F;
+}
+
+.promo-first-purchase .promo-conditions li {
+  color: #92400E;
+}
+
+.promo-first-purchase .promo-conditions li::before {
+  color: #B45309;
+}
+
+.promo-first-purchase .promo-code-box {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: #B45309;
+}
+
+.promo-first-purchase .promo-dismiss {
+  font-size: 11px;
+  color: #92400E;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 600;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.promo-first-purchase .promo-dismiss:hover {
+  opacity: 1;
+}
+
+/* ---- LOYALTY / FIDELITY SPECIAL CARD ---- */
+.promo-loyalty-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 16px;
+  flex-wrap: wrap;
+}
+
+.promo-loyalty-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  border: 2px solid #10B981;
+  color: #10B981;
+  background: #ECFDF5;
+  transition: all 0.3s;
+}
+
+.promo-loyalty-dot.gift {
+  background: #10B981;
+  color: #ffffff;
+  border-color: #10B981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.promo-loyalty-arrow {
+  color: #c4c7c7;
+  font-size: 14px;
+}
+
+/* ---- TIME-LIMITED BADGE ---- */
+.promo-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #EF4444;
+  margin-top: 4px;
+}
+
+.promo-time-badge .material-symbols-outlined {
+  font-size: 13px;
+}
+
+/* Happy Hour active indicator */
+.promo-happy-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FEE2E2;
+  color: #DC2626;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.promo-happy-inactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f5f3f3;
+  color: #747878;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+/* ---- FIRST PURCHASE POPUP MODAL ---- */
+.promo-popup-card {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 40%, #FCD34D 100%) !important;
+  border-radius: 28px !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(245, 158, 11, 0.25) !important;
+}
+
+.promo-popup-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.promo-popup-glow::after {
+  content: "";
+  position: absolute;
+  bottom: -120px;
+  left: -100px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+}
+
+.promo-popup-card .modal-close-btn {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.promo-popup-card .modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
 
