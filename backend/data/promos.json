@@ -71,7 +71,7 @@
       "conditions": [
         "Válido solo viernes, sábado y domingo",
         "Incluye: Mesa Brava + Chaufa Extra + 2 chichas",
-        "Chichas a elegir: Chicha Morada o Chicha de Maracuyá",
+        "Chichas a elegir: Chicha Morada o Bebida de Maracuyá",
         "Precio regular: ~S/ 67.00 → Promo: S/ 59.90"
       ],
       "promoPrice": "S/ 59.90",
@@ -112,7 +112,7 @@
       "highlight": "#EC4899",
       "conditions": [
         "Incluye: Fogón Supremo (30 alitas) + 2 Chaufas + 4 chichas",
-        "Chichas a elegir: Chicha Morada o Chicha de Maracuyá",
+        "Chichas a elegir: Chicha Morada o Bebida de Maracuyá",
         "Precio regular: ~S/ 100.00 → Promo: S/ 89.90",
         "Ideal para reuniones y celebraciones"
       ],
@@ -144,7 +144,7 @@
       "id": "combo_pareja",
       "title": "Combo Pareja",
       "subtitle": "Amor con sabor",
-      "description": "2 combos personales (a elegir) por solo S/ 39.90. Perfecto para dos.",
+      "description": "2 combos personales (a elegir) por solo S/ 29.90. Perfecto para dos.",
       "badge": "PARA DOS",
       "icon": "favorite",
       "type": "permanent",
@@ -154,9 +154,9 @@
       "conditions": [
         "Incluye: 2 combos personales a elegir",
         "Combos disponibles: La Esquina BBQ, Fuego de Barrio, Ruta Suave o Salsa Amazónica",
-        "Precio regular: ~S/ 32.00 → Promo: S/ 39.90 por los dos"
+        "Precio regular: ~S/ 32.00 → Promo: S/ 29.90 por los dos"
       ],
-      "promoPrice": "S/ 39.90",
+      "promoPrice": "S/ 29.90",
       "code": null,
       "active": true
     }

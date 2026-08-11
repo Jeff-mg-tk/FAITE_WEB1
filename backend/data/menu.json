@@ -100,6 +100,24 @@
       "recommended": false
     },
     {
+      "id": "manchaactiva",
+      "category": "familiares",
+      "name": "Mancha Activa",
+      "price": 41.50,
+      "description": "15 alitas, 2 salsas a elección, papas, camote",
+      "image": "./assets/platos/alitas.jpeg",
+      "recommended": false
+    },
+    {
+      "id": "combovacilon",
+      "category": "familiares",
+      "name": "Combo Vacilón",
+      "price": 62.50,
+      "description": "25 alitas, 3 salsas a elección, papas, camote",
+      "image": "./assets/platos/alitas1.jpeg",
+      "recommended": false
+    },
+    {
       "id": "papas",
       "category": "extras",
       "name": "Papas Extra",
@@ -131,7 +149,7 @@
       "category": "extras",
       "name": "Salsas",
       "price": 2.0,
-      "description": "Salsa acevichada, salsa amazónica o salsa BBQ",
+      "description": "Acevichada picante, acevichada simple, amazónica o BBQ",
       "image": "./assets/platos/salsas.jpeg",
       "recommended": false
     },
@@ -147,7 +165,7 @@
     {
       "id": "chichamaracuya",
       "category": "extras",
-      "name": "Chicha de Maracuyá",
+      "name": "Bebida de Maracuyá",
       "price": 2.5,
       "description": "600ml",
       "image": "./assets/platos/chichamaracuya.jpeg",
@@ -242,6 +260,30 @@
         { "key": "bbq", "label": "Salsa BBQ" }
       ]
     },
+    "manchaactiva": {
+      "title": "Personaliza tu Mancha Activa",
+      "subtitle": "Elige exactamente 2 salsas para tus 15 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 2,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
+    "combovacilon": {
+      "title": "Personaliza tu Combo Vacilón",
+      "subtitle": "Elige exactamente 3 salsas para tus 25 alitas (puedes repetir salsas)",
+      "type": "select-sum",
+      "targetSum": 3,
+      "options": [
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
+        { "key": "amazonica", "label": "Salsa Amazónica" },
+        { "key": "bbq", "label": "Salsa BBQ" }
+      ]
+    },
     "barriomixto": {
       "title": "Personaliza tu Barrio mixto",
       "subtitle": "Elige 1 salsa para tus alitas",
@@ -269,7 +311,8 @@
       "subtitle": "Selecciona una opción",
       "type": "select-one",
       "options": [
-        { "key": "acevichada", "label": "Salsa Acevichada" },
+        { "key": "acevichada_picante", "label": "Salsa Acevichada Picante" },
+        { "key": "acevichada_simple", "label": "Salsa Acevichada Simple" },
         { "key": "amazonica", "label": "Salsa Amazónica" },
         { "key": "bbq", "label": "Salsa BBQ" }
       ]
