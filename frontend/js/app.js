@@ -42,8 +42,8 @@ async function initApp() {
     renderMenuHTML(data.products);
     renderOrdersExtrasHTML(data.products);
 
-    // Initial state
-    switchScreen('home');
+    // Initial state: start directly on Menu (main landing)
+    switchScreen('menu');
     initDateSelect();
     populateTimeSlots();
     checkStoreHours();
@@ -80,7 +80,7 @@ function renderMenuHTML(products) {
     const imageHtml = p.image ? `
       <div class="relative w-full h-[160px] overflow-hidden">
         ${isRecommended}
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+        <img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
       </div>
     ` : '';
     const descriptionHtml = p.description ? `<p class="text-gray-500 text-[13px] mb-4 leading-normal pr-10">${p.description}</p>` : '';
@@ -123,7 +123,7 @@ function renderOrdersExtrasHTML(products) {
   extras.forEach(p => {
     const imageHtml = p.image ? `
       <div class="relative w-full h-[160px] overflow-hidden">
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+        <img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
       </div>
     ` : '';
     const descriptionHtml = p.description ? `<p class="text-gray-500 text-[13px] mb-4 leading-normal pr-10">${p.description}</p>` : '';
@@ -294,11 +294,7 @@ function switchScreen(screenName, el) {
 
   const bottomNav = document.querySelector('.bottom-nav');
   if (bottomNav) {
-    if (screenName === 'home') {
-      bottomNav.style.display = 'none';
-    } else {
-      bottomNav.style.display = 'flex';
-    }
+    bottomNav.style.display = 'flex';
   }
 
   let targetEl = el;
@@ -326,10 +322,6 @@ function switchScreen(screenName, el) {
 
   if (screenName === 'orders') {
     renderCartItems();
-  }
-
-  if (screenName === 'menu') {
-    showFirstPurchasePopup();
   }
 
   updateCartState();
@@ -996,9 +988,39 @@ function renderFirstPurchaseCard(promo) {
   `;
 }
 
+function getPromoGradient(hex) {
+  const map = {
+    '#3B82F6': 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+    '#EF4444': 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
+    '#8B5CF6': 'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+    '#F97316': 'linear-gradient(135deg, #F97316 0%, #C2410C 100%)',
+    '#EC4899': 'linear-gradient(135deg, #EC4899 0%, #BE185D 100%)',
+    '#10B981': 'linear-gradient(135deg, #10B981 0%, #047857 100%)',
+    '#E11D48': 'linear-gradient(135deg, #E11D48 0%, #9F1239 100%)',
+    '#F59E0B': 'linear-gradient(135deg, #F59E0B 0%, #B45309 100%)'
+  };
+  return map[hex] || `linear-gradient(135deg, ${hex} 0%, #1b1c1c 100%)`;
+}
+
+function togglePromoDetails(promoId) {
+  const details = document.getElementById(`promo-details-${promoId}`);
+  const btn = document.getElementById(`promo-toggle-${promoId}`);
+  if (!details) return;
+  
+  const isExpanded = details.classList.contains('expanded');
+  if (isExpanded) {
+    details.classList.remove('expanded');
+    if (btn) btn.classList.remove('expanded');
+  } else {
+    details.classList.add('expanded');
+    if (btn) btn.classList.add('expanded');
+  }
+}
+
 function renderPromoCard(promo) {
   const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
-  const priceHtml = promo.promoPrice ? `<div class="promo-price" style="color: ${promo.highlight};">${promo.promoPrice}</div>` : '';
+  const priceHtml = promo.promoPrice ? `<div class="promo-price">${promo.promoPrice}</div>` : '';
+  const gradient = getPromoGradient(promo.highlight);
   
   let timeBadgeHtml = '';
   if (promo.type === 'time_limited' && promo.endDate) {
@@ -1011,23 +1033,42 @@ function renderPromoCard(promo) {
   }
   
   return `
-    <div class="promo-card">
-      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+    <div class="promo-card" style="background: ${gradient};">
+      <div class="promo-card-circle"></div>
+      <div class="promo-card-circle-sm"></div>
       <div class="promo-card-body">
-        <span class="promo-badge" style="background: ${promo.highlight};">
-          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
-          ${promo.badge}
-        </span>
-        ${timeBadgeHtml}
-        <h3 class="promo-card-title">${promo.title}</h3>
-        <p class="promo-card-subtitle">${promo.subtitle}</p>
-        <p class="promo-card-desc">${promo.description}</p>
-        ${priceHtml}
-        <ul class="promo-conditions">${conditionsHtml}</ul>
-        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
-          <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
-          PEDIR ESTA PROMO
-        </button>
+        <div class="promo-card-top">
+          <div class="promo-card-icon">
+            <span class="material-symbols-outlined">${promo.icon}</span>
+          </div>
+          <div class="promo-card-info">
+            <span class="promo-badge">${promo.badge}</span>
+            ${timeBadgeHtml}
+            <h3 class="promo-card-title">${promo.title}</h3>
+            <p class="promo-card-subtitle">${promo.subtitle}</p>
+          </div>
+          ${priceHtml}
+        </div>
+        <div class="promo-card-actions">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+            <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
+            PEDIR PROMO
+          </button>
+          <button class="promo-details-toggle" id="promo-toggle-${promo.id}" onclick="togglePromoDetails('${promo.id}')">
+            <span>Detalles</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+        </div>
+      </div>
+      <div class="promo-card-details" id="promo-details-${promo.id}">
+        <p>${promo.description}</p>
+        ${promo.code ? `
+          <div class="promo-code-box">
+            <span class="promo-code-label">Código:</span>
+            <span>${promo.code}</span>
+          </div>
+        ` : ''}
+        ${conditionsHtml ? `<ul class="promo-conditions">${conditionsHtml}</ul>` : ''}
       </div>
     </div>
   `;
@@ -1035,10 +1076,10 @@ function renderPromoCard(promo) {
 
 function renderHappyHourCard(promo) {
   const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  const gradient = getPromoGradient(promo.highlight);
   
   // Check if currently in happy hour (3PM-5PM Peru time)
   const now = new Date();
-  // Use Peru timezone offset (-5 hours from UTC)
   const peruOffset = -5;
   const utcHour = now.getUTCHours();
   const peruHour = (utcHour + peruOffset + 24) % 24;
@@ -1046,25 +1087,38 @@ function renderHappyHourCard(promo) {
   
   const statusHtml = isHappyHour 
     ? `<div class="promo-happy-active"><span class="material-symbols-outlined" style="font-size: 12px;">circle</span> ¡ACTIVO AHORA!</div>`
-    : `<div class="promo-happy-inactive"><span class="material-symbols-outlined" style="font-size: 12px;">schedule</span> Disponible de 3PM a 5PM</div>`;
+    : `<div class="promo-happy-inactive"><span class="material-symbols-outlined" style="font-size: 12px;">schedule</span> 3PM a 5PM</div>`;
   
   return `
-    <div class="promo-card">
-      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+    <div class="promo-card" style="background: ${gradient};">
+      <div class="promo-card-circle"></div>
+      <div class="promo-card-circle-sm"></div>
       <div class="promo-card-body">
-        <span class="promo-badge" style="background: ${promo.highlight};">
-          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
-          ${promo.badge}
-        </span>
-        ${statusHtml}
-        <h3 class="promo-card-title">${promo.title}</h3>
-        <p class="promo-card-subtitle">${promo.subtitle}</p>
-        <p class="promo-card-desc">${promo.description}</p>
-        <ul class="promo-conditions">${conditionsHtml}</ul>
-        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
-          <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
-          PEDIR ESTA PROMO
-        </button>
+        <div class="promo-card-top">
+          <div class="promo-card-icon">
+            <span class="material-symbols-outlined">${promo.icon}</span>
+          </div>
+          <div class="promo-card-info">
+            <span class="promo-badge">${promo.badge}</span>
+            ${statusHtml}
+            <h3 class="promo-card-title">${promo.title}</h3>
+            <p class="promo-card-subtitle">${promo.subtitle}</p>
+          </div>
+        </div>
+        <div class="promo-card-actions">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+            <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
+            PEDIR PROMO
+          </button>
+          <button class="promo-details-toggle" id="promo-toggle-${promo.id}" onclick="togglePromoDetails('${promo.id}')">
+            <span>Detalles</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+        </div>
+      </div>
+      <div class="promo-card-details" id="promo-details-${promo.id}">
+        <p>${promo.description}</p>
+        ${conditionsHtml ? `<ul class="promo-conditions">${conditionsHtml}</ul>` : ''}
       </div>
     </div>
   `;
@@ -1072,6 +1126,7 @@ function renderHappyHourCard(promo) {
 
 function renderLoyaltyCard(promo) {
   const conditionsHtml = (promo.conditions || []).map(c => `<li>${c}</li>`).join('');
+  const gradient = getPromoGradient(promo.highlight);
   
   // Build the 5 + 1 loyalty dots visual
   let dotsHtml = '';
@@ -1083,22 +1138,35 @@ function renderLoyaltyCard(promo) {
   dotsHtml += `<div class="promo-loyalty-dot gift"><span class="material-symbols-outlined" style="font-size: 16px;">redeem</span></div>`;
   
   return `
-    <div class="promo-card">
-      <div class="promo-card-accent" style="background: ${promo.highlight};"></div>
+    <div class="promo-card" style="background: ${gradient};">
+      <div class="promo-card-circle"></div>
+      <div class="promo-card-circle-sm"></div>
       <div class="promo-card-body">
-        <span class="promo-badge" style="background: ${promo.highlight};">
-          <span class="material-symbols-outlined" style="font-size: 11px;">${promo.icon}</span>
-          ${promo.badge}
-        </span>
-        <h3 class="promo-card-title">${promo.title}</h3>
-        <p class="promo-card-subtitle">${promo.subtitle}</p>
-        <p class="promo-card-desc">${promo.description}</p>
+        <div class="promo-card-top">
+          <div class="promo-card-icon">
+            <span class="material-symbols-outlined">${promo.icon}</span>
+          </div>
+          <div class="promo-card-info">
+            <span class="promo-badge">${promo.badge}</span>
+            <h3 class="promo-card-title">${promo.title}</h3>
+            <p class="promo-card-subtitle">${promo.subtitle}</p>
+          </div>
+        </div>
+        <div class="promo-card-actions">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+            <span class="material-symbols-outlined" style="font-size: 15px;">chat</span>
+            MI PROGRESO
+          </button>
+          <button class="promo-details-toggle" id="promo-toggle-${promo.id}" onclick="togglePromoDetails('${promo.id}')">
+            <span>Detalles</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+        </div>
+      </div>
+      <div class="promo-card-details" id="promo-details-${promo.id}">
+        <p>${promo.description}</p>
         <div class="promo-loyalty-dots">${dotsHtml}</div>
-        <ul class="promo-conditions">${conditionsHtml}</ul>
-        <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
-          <span class="material-symbols-outlined" style="font-size: 15px;">chat</span>
-          CONSULTAR MI PROGRESO
-        </button>
+        ${conditionsHtml ? `<ul class="promo-conditions">${conditionsHtml}</ul>` : ''}
       </div>
     </div>
   `;
@@ -1131,10 +1199,23 @@ function dismissFirstPurchasePromo() {
 
 function showFirstPurchasePopup() {
   if (localStorage.getItem('faite_first_promo_used') === 'true') return;
-  // Show after a short delay for better UX
+  if (window._firstPromoScheduled) return;
+  window._firstPromoScheduled = true;
+
+  // Show after 30 seconds of browsing so it's not invasive
   setTimeout(() => {
-    openModal('modal-first-promo');
-  }, 1500);
+    // Only show if user hasn't dismissed it in the meantime
+    if (localStorage.getItem('faite_first_promo_used') !== 'true') {
+      openModal('modal-first-promo');
+    }
+  }, 30000);
+}
+
+// Schedule the popup once the app loads (runs once)
+if (localStorage.getItem('faite_first_promo_used') !== 'true') {
+  document.addEventListener('DOMContentLoaded', () => {
+    showFirstPurchasePopup();
+  });
 }
 
 function promoOrderWhatsApp(promoId, promoTitle) {

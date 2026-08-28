@@ -4,7 +4,7 @@
       "id": "primera_vez",
       "title": "Primera Vez FAITE",
       "subtitle": "¡Bienvenido a la familia!",
-      "description": "Obtén un 15% de descuento en tu primer pedido. Solo menciónalo al hacer tu pedido por WhatsApp.",
+      "description": "Obtén un 5% de descuento en tu primer pedido. Solo menciónalo al hacer tu pedido por WhatsApp.",
       "badge": "NUEVO CLIENTE",
       "icon": "celebration",
       "type": "first_purchase",
@@ -92,8 +92,7 @@
       "conditions": [
         "12 alitas con 1 salsa a elegir",
         "Salsas disponibles: Acevichada, Amazónica o BBQ",
-        "No incluye acompañamientos (papas/camote aparte)",
-        "Precio por alita: ~S/ 2.08"
+        "No incluye acompañamientos (papas/camote)"
       ],
       "promoPrice": "S/ 25.00",
       "code": null,
@@ -124,7 +123,7 @@
       "id": "fidelidad",
       "title": "Programa de Fidelidad",
       "subtitle": "Tu lealtad tiene premio",
-      "description": "Por cada 5 pedidos que realices, tu 6to combo personal es completamente GRATIS. ¡Acumula y disfruta!",
+      "description": "Por cada 5 pedidos que realices, tu 6to pedido incluye GRATIS: 3 alitas + papas + camote + salsa a elección. ¡Acumula y disfruta!",
       "badge": "FIDELIDAD",
       "icon": "loyalty",
       "type": "permanent",
@@ -132,9 +131,8 @@
       "endDate": null,
       "highlight": "#10B981",
       "conditions": [
-        "Aplica para combos personales",
+        "Aplica al acumular 5 pedidos de cualquier tipo",
         "Se lleva registro por WhatsApp",
-        "El combo gratis es de igual o menor valor al más pedido",
         "Sin fecha de expiración para tus pedidos acumulados"
       ],
       "code": null,

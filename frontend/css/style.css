@@ -304,14 +304,13 @@ body {
 
 
 /* =========================================
-   PROMOS SECTION STYLES
+   PROMOS SECTION STYLES (Compact Gradient Cards)
    ========================================= */
 
-/* Responsive grid for promo cards */
 .promos-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 14px;
 }
 
 @media (min-width: 640px) {
@@ -320,11 +319,8 @@ body {
   }
 }
 
-/* Base promo card */
 .promo-card {
-  background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -334,11 +330,10 @@ body {
 }
 
 .promo-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Staggered animation delays */
 .promo-card:nth-child(1) { animation-delay: 0.05s; }
 .promo-card:nth-child(2) { animation-delay: 0.1s; }
 .promo-card:nth-child(3) { animation-delay: 0.15s; }
@@ -349,28 +344,67 @@ body {
 .promo-card:nth-child(8) { animation-delay: 0.4s; }
 
 @keyframes promoFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Color accent bar on left side */
-.promo-card-accent {
+.promo-card-circle {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  border-radius: 20px 0 0 20px;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
 }
 
-/* Promo card body */
+.promo-card-circle-sm {
+  position: absolute;
+  bottom: -20px;
+  left: -15px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
 .promo-card-body {
-  padding: 20px 20px 20px 24px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Badge pill */
+.promo-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.promo-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.promo-card-icon .material-symbols-outlined {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.promo-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .promo-badge {
   display: inline-flex;
   align-items: center;
@@ -378,56 +412,137 @@ body {
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.8px;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 20px;
   color: #ffffff;
   text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* Promo title */
 .promo-card-title {
   font-family: 'Roboto Slab', serif;
   font-weight: 800;
-  font-size: 17px;
-  color: #1b1c1c;
-  margin: 10px 0 2px;
+  font-size: 16px;
+  color: #ffffff;
+  margin: 6px 0 0;
   letter-spacing: -0.3px;
+  line-height: 1.2;
 }
 
-/* Promo subtitle */
-.promo-card-subtitle {
-  font-size: 12px;
-  color: #747878;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-/* Promo description */
-.promo-card-desc {
-  font-size: 13px;
-  color: #444748;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
-/* Promo price highlight */
 .promo-price {
   font-family: 'Roboto Slab', serif;
   font-weight: 900;
-  font-size: 22px;
-  margin: 8px 0;
+  font-size: 26px;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Conditions list */
+.promo-card-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  margin: 2px 0 0;
+}
+
+.promo-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #1b1c1c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.promo-cta:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.promo-cta:active {
+  transform: scale(0.95);
+}
+
+.promo-details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 8px 14px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.promo-details-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.promo-details-toggle .material-symbols-outlined {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.promo-details-toggle.expanded .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+.promo-card-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 0 0 20px 20px;
+  padding: 0 20px;
+}
+
+.promo-card-details.expanded {
+  max-height: 400px;
+  padding: 16px 20px;
+}
+
+.promo-card-details p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
 .promo-conditions {
   list-style: none;
   padding: 0;
-  margin: 0 0 16px;
+  margin: 0;
 }
 
 .promo-conditions li {
   font-size: 11px;
-  color: #747878;
+  color: rgba(255, 255, 255, 0.8);
   padding: 3px 0;
   display: flex;
   align-items: flex-start;
@@ -441,18 +556,18 @@ body {
   font-size: 10px;
   flex-shrink: 0;
   margin-top: 1px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Promo code box */
 .promo-code-box {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #f5f3f3;
-  border: 1.5px dashed #c4c7c7;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px dashed rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   padding: 8px 14px;
-  margin-bottom: 14px;
+  margin-top: 10px;
 }
 
 .promo-code-box span {
@@ -460,48 +575,26 @@ body {
   font-weight: 800;
   font-size: 14px;
   letter-spacing: 1.5px;
-  color: #1b1c1c;
+  color: #ffffff;
 }
 
 .promo-code-label {
   font-size: 10px;
-  color: #747878;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-/* CTA Button */
-.promo-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #1b1c1c;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-transform: uppercase;
-}
-
-.promo-cta:active {
-  transform: scale(0.95);
 }
 
 /* ---- FIRST PURCHASE SPECIAL CARD ---- */
 .promo-first-purchase {
   background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
   border-radius: 24px;
-  padding: 28px 24px;
-  margin-bottom: 20px;
+  padding: 24px;
+  margin-bottom: 16px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.2);
   opacity: 0;
   transform: translateY(20px);
   animation: promoFadeIn 0.6s ease forwards;
@@ -530,7 +623,7 @@ body {
 }
 
 .promo-first-purchase .promo-card-title {
-  font-size: 22px;
+  font-size: 20px;
   color: #78350F;
 }
 
@@ -539,7 +632,9 @@ body {
 }
 
 .promo-first-purchase .promo-card-desc {
+  font-size: 13px;
   color: #78350F;
+  line-height: 1.5;
 }
 
 .promo-first-purchase .promo-conditions li {
@@ -553,6 +648,14 @@ body {
 .promo-first-purchase .promo-code-box {
   background: rgba(255, 255, 255, 0.5);
   border-color: #B45309;
+}
+
+.promo-first-purchase .promo-code-box span {
+  color: #78350F;
+}
+
+.promo-first-purchase .promo-code-label {
+  color: #92400E;
 }
 
 .promo-first-purchase .promo-dismiss {
@@ -571,69 +674,54 @@ body {
   opacity: 1;
 }
 
-/* ---- LOYALTY / FIDELITY SPECIAL CARD ---- */
+/* ---- LOYALTY DOTS ---- */
 .promo-loyalty-dots {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 14px 0 16px;
+  gap: 6px;
+  margin: 10px 0;
   flex-wrap: wrap;
 }
 
 .promo-loyalty-dot {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
-  border: 2px solid #10B981;
-  color: #10B981;
-  background: #ECFDF5;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
   transition: all 0.3s;
 }
 
 .promo-loyalty-dot.gift {
-  background: #10B981;
-  color: #ffffff;
-  border-color: #10B981;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: #ffffff;
+  color: #10B981;
+  border-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .promo-loyalty-arrow {
-  color: #c4c7c7;
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
 }
 
-/* ---- TIME-LIMITED BADGE ---- */
-.promo-time-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  color: #EF4444;
-  margin-top: 4px;
-}
-
-.promo-time-badge .material-symbols-outlined {
-  font-size: 13px;
-}
-
-/* Happy Hour active indicator */
+/* ---- HAPPY HOUR STATUS ---- */
 .promo-happy-active {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #FEE2E2;
-  color: #DC2626;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 20px;
-  margin-top: 8px;
+  margin-top: 4px;
   animation: pulse 2s infinite;
 }
 
@@ -646,14 +734,27 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #f5f3f3;
-  color: #747878;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 20px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
+
+.promo-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+}
+
+.promo-time-badge .material-symbols-outlined {
+  font-size: 13px;
 
 /* ---- FIRST PURCHASE POPUP MODAL ---- */
 .promo-popup-card {
@@ -692,5 +793,74 @@ body {
 
 .promo-popup-card .modal-close-btn:hover {
   background: rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================
+   FLOATING WHATSAPP BUTTON
+   ========================================= */
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  z-index: 55;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  animation: whatsappBounce 2s ease-in-out 3s 1;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.whatsapp-float:active {
+  transform: scale(0.95);
+}
+
+/* Subtle pulse ring */
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.3);
+  animation: whatsappPulse 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes whatsappPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes whatsappBounce {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-4px); }
+}
+
+/* Move WhatsApp button up when bottom nav is visible */
+@media (max-width: 639px) {
+  .whatsapp-float {
+    bottom: 96px;
+  }
 }
 

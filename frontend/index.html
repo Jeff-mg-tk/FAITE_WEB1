@@ -21,7 +21,64 @@
   
   <link rel="icon" href="./assets/favicon.png" type="image/png" />
   <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
-  <title>FAITE - Sabor con Calle</title>
+  <title>FAITE - Alitas Delivery en Chiclayo | Sabor con Calle</title>
+  <meta name="description" content="Pide las mejores alitas crocantes con salsa acevichada en Chiclayo. Delivery de 3PM a 11PM. Combos personales, dúos y familiares. ¡Ordena por WhatsApp!" />
+  <meta name="keywords" content="alitas delivery Chiclayo, alitas crocantes, FAITE, delivery comida Chiclayo, alitas acevichadas, comida a domicilio Chiclayo" />
+  <meta name="author" content="FAITE" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://faite.pe/" />
+
+  <!-- Open Graph (Facebook, WhatsApp, Instagram) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FAITE - Alitas Delivery en Chiclayo" />
+  <meta property="og:description" content="Las mejores alitas crocantes con salsa acevichada. Combos desde S/ 16. Delivery de 3PM a 11PM. ¡Pide por WhatsApp!" />
+  <meta property="og:image" content="./assets/logo_completo.png" />
+  <meta property="og:url" content="https://faite.pe/" />
+  <meta property="og:locale" content="es_PE" />
+  <meta property="og:site_name" content="FAITE - Sabor con Calle" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FAITE - Alitas Delivery en Chiclayo" />
+  <meta name="twitter:description" content="Las mejores alitas crocantes con salsa acevichada. Combos desde S/ 16. ¡Pide por WhatsApp!" />
+  <meta name="twitter:image" content="./assets/logo_completo.png" />
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "FAITE - Sabor con Calle",
+    "description": "Alitas crocantes con salsa acevichada. Delivery en Chiclayo de 3PM a 11PM.",
+    "image": "./assets/logo_completo.png",
+    "telephone": "+51913952019",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Chiclayo",
+      "addressRegion": "Lambayeque",
+      "addressCountry": "PE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "-6.7714",
+      "longitude": "-79.8409"
+    },
+    "url": "https://faite.pe/",
+    "servesCuisine": ["Alitas", "Comida peruana", "Comida rápida"],
+    "priceRange": "S/ 16 - S/ 70",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "15:00",
+      "closes": "23:00"
+    },
+    "sameAs": [
+      "https://www.instagram.com/faiteoficial",
+      "https://www.facebook.com/share/18tguJmRQJ/",
+      "https://www.tiktok.com/@faiteoficial"
+    ]
+  }
+  </script>
   
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,7 +112,7 @@
       <div class="flex flex-col items-center pt-10 pb-6 px-6 min-h-screen">
         <!-- Logo Completo -->
         <div class="mb-8 flex justify-center">
-          <img src="./assets/logo_completo.png" alt="FAITE Logo" class="h-40 object-contain" />
+          <img src="./assets/logo_completo.png" alt="FAITE Logo" class="h-40 object-contain" loading="lazy" />
         </div>
 
         <p class="text-[13px] text-gray-600 mb-8">Sabor acevichado en cada ala</p>
@@ -109,7 +166,7 @@
             <!-- Logo & Slogan -->
             <div class="flex flex-col items-start">
               <div class="flex items-center gap-2 mb-1">
-                <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="h-8 w-8 object-contain" />
+                <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="h-8 w-8 object-contain" loading="lazy" />
                 <span class="font-serif font-black text-lg tracking-tight">FAITE</span>
               </div>
               <p class="text-[12px] text-gray-500 font-medium">Sabor con Calle.</p>
@@ -210,7 +267,7 @@
 
       <!-- Hero Profile -->
       <div class="hero-section">
-        <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="profile-img bg-white p-0" />
+        <img src="./assets/logo_simbolo.png" alt="FAITE Logo" class="profile-img bg-white p-0" loading="lazy" />
         <h2 class="text-[22px] font-serif font-black tracking-tight mb-2">Sabor que Inspira</h2>
         <p class="text-[13px] text-gray-500 max-w-[300px] leading-relaxed">Fusión auténtica de alitas crocantes con el
           toque refrescante de nuestra salsas.</p>
@@ -283,6 +340,14 @@
           <div class="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
             <span class="font-bold text-[12px] text-gray-400 tracking-wider">TOTAL ESTIMADO</span>
             <span id="orders-total" class="font-serif font-bold text-[18px]">S/ 0.00</span>
+          </div>
+
+          <!-- Delivery cost estimate -->
+          <div class="flex items-center gap-2 mt-3 px-1">
+            <span class="material-symbols-outlined text-[16px] text-amber-600">delivery_dining</span>
+            <p class="text-[11px] text-gray-500 leading-snug">
+              <span class="font-bold text-gray-700">Delivery desde S/ 3.00.</span> El monto exacto se confirma por WhatsApp según tu zona en Chiclayo.
+            </p>
           </div>
 
           <!-- Programación de Pedido (Scheduled Orders) -->
@@ -378,15 +443,19 @@
 
       <a href="javascript:void(0)" onclick="switchScreen('menu', this)" class="nav-item active" id="nav-btn-menu">
         <span class="material-symbols-outlined md:hidden" style="font-variation-settings: 'FILL' 1;">restaurant</span>
-        <span class="hidden md:inline">Menu</span>
+        <span class="hidden md:inline">Carta</span>
       </a>
       <a href="javascript:void(0)" onclick="switchScreen('orders', this)" class="nav-item" id="nav-btn-orders">
         <span class="material-symbols-outlined md:hidden">receipt_long</span>
-        <span class="hidden md:inline">Orders</span>
+        <span class="hidden md:inline">Pedidos</span>
       </a>
       <a href="javascript:void(0)" onclick="switchScreen('promos', this)" class="nav-item" id="nav-btn-promos">
         <span class="material-symbols-outlined md:hidden">sell</span>
         <span class="hidden md:inline">Promos</span>
+      </a>
+      <a href="javascript:void(0)" onclick="switchScreen('home', this)" class="nav-item" id="nav-btn-home">
+        <span class="material-symbols-outlined md:hidden">more_horiz</span>
+        <span class="hidden md:inline">Más</span>
       </a>
     </nav>
 
@@ -624,7 +693,7 @@
           </span>
           <h3 class="font-serif font-black text-[24px] text-amber-900 mt-3 mb-1">¡Primera Vez FAITE!</h3>
           <p class="text-[13px] text-amber-800 font-semibold mb-3">¡Bienvenido a la familia!</p>
-          <p class="text-[13px] text-amber-900/80 leading-relaxed mb-4">Obtén un <strong>15% de descuento</strong> en tu primer pedido. Solo menciónalo al pedir por WhatsApp.</p>
+          <p class="text-[13px] text-amber-900/80 leading-relaxed mb-4">Obtén un <strong>5% de descuento</strong> en tu primer pedido. Solo menciónalo al pedir por WhatsApp.</p>
           <div class="promo-code-box mx-auto" style="background: rgba(255,255,255,0.5); border-color: #B45309;">
             <span class="promo-code-label">Código:</span>
             <span>PRIMERAVEZ</span>
@@ -646,6 +715,17 @@
       </div>
     </div>
   </div>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/51913952019?text=%C2%A1Hola%20FAITE!%20Tengo%20una%20consulta." target="_blank" rel="noopener noreferrer"
+    id="whatsapp-float"
+    class="whatsapp-float"
+    aria-label="Chatea con nosotros por WhatsApp">
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff">
+      <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.744 3.047 9.381L1.054 31.2l6.023-1.932A15.91 15.91 0 0016.004 32C24.826 32 32 24.826 32 16.004S24.826 0 16.004 0zm9.32 22.617c-.387 1.09-1.922 1.996-3.137 2.262-.832.176-1.918.317-5.574-1.199-4.676-1.937-7.688-6.676-7.922-6.984-.226-.309-1.894-2.524-1.894-4.816 0-2.293 1.199-3.418 1.625-3.883.387-.422.906-.582 1.191-.582.145 0 .274.008.39.012.426.02.641.043.922.715.352.836 1.21 2.953 1.317 3.168.11.218.222.512.074.82-.14.316-.262.457-.48.703-.218.246-.426.434-.644.7-.199.234-.422.484-.176.93.246.441 1.094 1.805 2.352 2.926 1.617 1.441 2.98 1.89 3.402 2.098.422.207.668.176.914-.106.254-.29 1.082-1.258 1.371-1.691.281-.434.57-.359.957-.215.39.14 2.472 1.168 2.898 1.379.422.215.703.32.808.5.102.176.102 1.035-.285 2.125z"/>
+    </svg>
+  </a>
+
 
 </body>
 
