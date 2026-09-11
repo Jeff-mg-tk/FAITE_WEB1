@@ -436,7 +436,8 @@ function checkoutOrder() {
       alert("Por favor selecciona una hora de entrega válida.");
       return;
     }
-    text += `\n*Tipo de Entrega:* Programado para *${scheduledDate}* a las *${scheduledTime}*\n`;
+    const dateLabel = scheduledDate === 'HOY' ? 'hoy' : scheduledDate;
+    text += `\n*Tipo de Entrega:* Programado para *${dateLabel}* a las *${scheduledTime}*\n`;
   } else {
     text += `\n*Tipo de Entrega:* Entrega Inmediata\n`;
   }
@@ -652,41 +653,49 @@ function setDeliveryType(type) {
   orderDeliveryType = 'scheduled';
 }
 
+function getPeruNow() {
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  return new Date(utc + (3600000 * -5));
+}
+
 function initDateSelect() {
   const dateSelect = document.getElementById('scheduled-date-select');
   if (!dateSelect) return;
 
   dateSelect.innerHTML = '';
-  
-  // Calculate current date in Peru (GMT-5)
-  const now = new Date();
-  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const peruNow = new Date(utc + (3600000 * -5));
-  
+
+  const peruNow = getPeruNow();
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  
-  for (let i = 1; i <= 7; i++) {
+
+  // Check if today still has valid slots (at least 1 hour before 11 PM = hour < 22)
+  const todayHasSlotsAvailable = peruNow.getHours() < 22;
+
+  const startIndex = todayHasSlotsAvailable ? 0 : 1;
+
+  for (let i = startIndex; i <= 7; i++) {
     const nextDate = new Date(peruNow);
     nextDate.setDate(peruNow.getDate() + i);
-    
+
     let dayLabel = nextDate.toLocaleDateString('es-PE', options);
     // Capitalize the first letter
     dayLabel = dayLabel.charAt(0).toUpperCase() + dayLabel.slice(1);
-    
+
     let displayValue = dayLabel;
-    if (i === 1) {
+    if (i === 0) {
+      displayValue = `Hoy (${dayLabel})`;
+    } else if (i === 1) {
       displayValue = `Mañana (${dayLabel})`;
     }
-    
-    const optionValue = dayLabel;
-    
+
     const option = document.createElement('option');
-    option.value = optionValue;
+    option.value = i === 0 ? 'HOY' : dayLabel;
     option.textContent = displayValue;
     dateSelect.appendChild(option);
   }
 
   scheduledDate = dateSelect.value;
+  populateTimeSlots();
 }
 
 function onScheduledDateChange() {
@@ -706,11 +715,12 @@ function onScheduledTimeChange() {
 }
 
 // Generate the 3:00 PM - 11:00 PM time slots (every 30 mins)
+// When today is selected, filters out slots less than 1 hour ahead
 function populateTimeSlots() {
   const timeSelect = document.getElementById('scheduled-time-select');
   if (!timeSelect) return;
 
-  const slots = [
+  const allSlots = [
     { value: '03:00 PM', hour: 15, min: 0 },
     { value: '03:30 PM', hour: 15, min: 30 },
     { value: '04:00 PM', hour: 16, min: 0 },
@@ -729,6 +739,18 @@ function populateTimeSlots() {
     { value: '10:30 PM', hour: 22, min: 30 },
     { value: '11:00 PM', hour: 23, min: 0 }
   ];
+
+  const dateSelect = document.getElementById('scheduled-date-select');
+  const isToday = dateSelect && dateSelect.value === 'HOY';
+
+  let slots = allSlots;
+  if (isToday) {
+    const peruNow = getPeruNow();
+    // Current time in minutes since midnight
+    const nowMinutes = peruNow.getHours() * 60 + peruNow.getMinutes();
+    // Keep only slots that are at least 60 minutes ahead
+    slots = allSlots.filter(slot => (slot.hour * 60 + slot.min) >= nowMinutes + 60);
+  }
 
   timeSelect.innerHTML = '';
 
@@ -1219,7 +1241,43 @@ if (localStorage.getItem('faite_first_promo_used') !== 'true') {
 }
 
 function promoOrderWhatsApp(promoId, promoTitle) {
-  const text = `¡Hola! Me interesa la promoción *"${promoTitle}"* que vi en su página web. ¿Podrían darme más detalles para pedirla?`;
+  let text = `¡Hola! Quisiera hacer un pedido con la promoción *"${promoTitle}"*:\n\n`;
+
+  // Include cart items if any
+  let total = 0;
+  let hasItems = false;
+  for (const key in cart) {
+    if (cart[key] > 0) {
+      hasItems = true;
+      const detail = cartDetails[key] || { name: names[key], price: prices[key], optionsText: "" };
+      const itemPrice = detail.price || prices[key] || 0;
+      const itemName = detail.name || names[key];
+      const itemOptions = detail.optionsText;
+      const itemTotal = cart[key] * itemPrice;
+
+      text += `- ${cart[key]}x ${itemName}`;
+      if (itemOptions) {
+        text += ` (${itemOptions})`;
+      }
+      text += ` (S/ ${itemPrice.toFixed(2)} c/u) = S/ ${itemTotal.toFixed(2)}\n`;
+      total += itemTotal;
+    }
+  }
+
+  if (!hasItems) {
+    text += `_(Aún no he seleccionado productos del menú)_\n`;
+  } else {
+    text += `\n*Subtotal carrito: S/ ${total.toFixed(2)}*\n`;
+  }
+
+  // Include delivery date/time if set
+  if (scheduledTime) {
+    const dateLabel = scheduledDate === 'HOY' ? 'hoy' : scheduledDate;
+    text += `\n📅 *Entrega:* ${dateLabel} a las ${scheduledTime}\n`;
+  }
+
+  text += `\n🏷️ *Promo aplicada:* ${promoTitle}`;
+
   const encodedText = encodeURIComponent(text);
   const whatsappUrl = `https://wa.me/51913952019?text=${encodedText}`;
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
