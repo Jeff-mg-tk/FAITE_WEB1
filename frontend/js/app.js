@@ -72,9 +72,15 @@ function renderMenuHTML(products) {
     }
   }
 
+  // Track index per category for staggered animation
+  const categoryIndex = { personales: 0, duos: 0, familiares: 0, extras: 0 };
+
   products.forEach(p => {
     const container = categories[p.category]?.el;
     if (!container) return;
+
+    const idx = categoryIndex[p.category] ?? 0;
+    categoryIndex[p.category] = idx + 1;
 
     const isRecommended = p.recommended ? `<div class="absolute top-3 left-3 bg-black text-white text-[9px] font-bold py-1 px-2.5 rounded-full z-10 tracking-wider">RECOMENDADO</div>` : '';
     const imageHtml = p.image ? `
@@ -87,7 +93,7 @@ function renderMenuHTML(products) {
     const mbClass = p.description ? 'mb-1' : 'mb-4';
 
     const cardHtml = `
-      <div class="card relative flex flex-col">
+      <div class="card card-animate relative flex flex-col" style="--i: ${idx};">
         ${imageHtml}
         <div class="p-5 flex-1 flex flex-col justify-between">
           <div>
@@ -398,7 +404,15 @@ function switchTab(element, sectionId) {
     section.classList.add('hidden');
   });
   const targetSection = document.getElementById(sectionId);
-  if (targetSection) targetSection.classList.remove('hidden');
+  if (targetSection) {
+    targetSection.classList.remove('hidden');
+    // Re-trigger entrance animation for cards in this section
+    targetSection.querySelectorAll('.card-animate').forEach(card => {
+      card.style.animation = 'none';
+      card.offsetHeight; // force reflow
+      card.style.animation = '';
+    });
+  }
 
   element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }

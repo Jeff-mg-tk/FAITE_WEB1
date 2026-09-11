@@ -26,6 +26,24 @@ body {
   overflow: hidden;
 }
 
+/* Menu card entrance animation */
+@keyframes cardFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-animate {
+  opacity: 0;
+  animation: cardFadeInUp 0.45s ease forwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
 .btn-circle {
   width: 38px;
   height: 38px;
