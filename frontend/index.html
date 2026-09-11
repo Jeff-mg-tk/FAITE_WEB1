@@ -17,10 +17,25 @@
     if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
       window.location.href = window.location.href.replace('http:', 'https:');
     }
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
   </script>
   
   <link rel="icon" href="./assets/favicon.png" type="image/png" />
   <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FAITE" />
+  <link rel="apple-touch-icon" href="./assets/logo_simbolo.png" />
+  <meta name="theme-color" content="#1b1c1c" />
   <title>FAITE - Alitas Delivery en Chiclayo | Sabor con Calle</title>
   <meta name="description" content="Pide las mejores alitas crocantes con salsa acevichada en Chiclayo. Delivery de 3PM a 11PM. Combos personales, dúos y familiares. ¡Ordena por WhatsApp!" />
   <meta name="keywords" content="alitas delivery Chiclayo, alitas crocantes, FAITE, delivery comida Chiclayo, alitas acevichadas, comida a domicilio Chiclayo" />

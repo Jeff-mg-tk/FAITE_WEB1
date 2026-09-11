@@ -1,0 +1,43 @@
+{
+  "name": "FAITE - Sabor con Calle",
+  "short_name": "FAITE",
+  "description": "Las mejores alitas crocantes con salsa acevichada. Delivery en Chiclayo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f3f3",
+  "theme_color": "#1b1c1c",
+  "orientation": "portrait",
+  "lang": "es-PE",
+  "icons": [
+    {
+      "src": "./assets/logo_simbolo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["food", "shopping"],
+  "shortcuts": [
+    {
+      "name": "Ver Carta",
+      "short_name": "Carta",
+      "description": "Ver el menú completo de FAITE",
+      "url": "/?screen=menu",
+      "icons": [{ "src": "./assets/logo_simbolo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Ver Promos",
+      "short_name": "Promos",
+      "description": "Ver las promociones activas",
+      "url": "/?screen=promos",
+      "icons": [{ "src": "./assets/logo_simbolo.png", "sizes": "96x96" }]
+    }
+  ]
+}
