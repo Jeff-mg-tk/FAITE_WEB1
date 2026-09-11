@@ -1,4 +1,4 @@
-const CACHE_NAME = 'faite-v1';
+const CACHE_NAME = 'faite-v2';
 
 // Assets to cache on install (app shell)
 const STATIC_ASSETS = [
@@ -8,10 +8,12 @@ const STATIC_ASSETS = [
   '/js/app.js',
   '/data/menu.json',
   '/data/promos.json',
+  '/manifest.json',
   '/assets/logo_completo.png',
   '/assets/logo_simbolo.png',
   '/assets/logo_texto.png',
-  '/assets/favicon.png'
+  '/assets/favicon.png',
+  '/assets/pwa-icon.jpg'
 ];
 
 // Install: pre-cache the app shell
