@@ -1,3 +1,6 @@
-# Configuración de redirección para Netlify (Proxy a Backend)
-# Reemplaza la URL de abajo por la de tu servidor backend en producción (ej. Render o Railway)
+# Menú y Promos: estáticos desde Netlify CDN (no tocan Render)
+/api/menu    /data/menu.json    200
+/api/promos  /data/promos.json  200
+
+# Todo lo demás (complaints, store-status): proxy al backend de Render
 /api/*  https://faite-backend-19sw.onrender.com/api/:splat  200

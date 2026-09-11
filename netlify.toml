@@ -1,6 +1,20 @@
 [build]
   publish = "frontend"
 
+# Menú y Promos: servidos como archivos estáticos desde Netlify CDN (instantáneo, sin depender de Render)
+[[redirects]]
+  from = "/api/menu"
+  to = "/data/menu.json"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/promos"
+  to = "/data/promos.json"
+  status = 200
+  force = true
+
+# Todo lo demás (complaints, store-status): sigue yendo al backend de Render
 [[redirects]]
   from = "/api/*"
   to = "https://faite-backend-19sw.onrender.com/api/:splat"
