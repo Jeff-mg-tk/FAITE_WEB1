@@ -1072,7 +1072,7 @@ function renderPromoCard(promo) {
           ${priceHtml}
         </div>
         <div class="promo-card-actions">
-          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}', '${promo.promoPrice || ''}')">
             <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
             PEDIR PROMO
           </button>
@@ -1128,7 +1128,7 @@ function renderHappyHourCard(promo) {
           </div>
         </div>
         <div class="promo-card-actions">
-          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}', '${promo.promoPrice || ''}')">
             <span class="material-symbols-outlined" style="font-size: 15px;">shopping_bag</span>
             PEDIR PROMO
           </button>
@@ -1175,7 +1175,7 @@ function renderLoyaltyCard(promo) {
           </div>
         </div>
         <div class="promo-card-actions">
-          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}')">
+          <button class="promo-cta" onclick="promoOrderWhatsApp('${promo.id}', '${promo.title}', '${promo.promoPrice || ''}')">
             <span class="material-symbols-outlined" style="font-size: 15px;">chat</span>
             MI PROGRESO
           </button>
@@ -1240,7 +1240,7 @@ if (localStorage.getItem('faite_first_promo_used') !== 'true') {
   });
 }
 
-function promoOrderWhatsApp(promoId, promoTitle) {
+function promoOrderWhatsApp(promoId, promoTitle, promoPrice) {
   let text = `¡Hola! Quisiera hacer un pedido con la promoción *"${promoTitle}"*:\n\n`;
 
   // Include cart items if any
@@ -1264,9 +1264,7 @@ function promoOrderWhatsApp(promoId, promoTitle) {
     }
   }
 
-  if (!hasItems) {
-    text += `_(Aún no he seleccionado productos del menú)_\n`;
-  } else {
+  if (hasItems) {
     text += `\n*Subtotal carrito: S/ ${total.toFixed(2)}*\n`;
   }
 
@@ -1277,6 +1275,9 @@ function promoOrderWhatsApp(promoId, promoTitle) {
   }
 
   text += `\n🏷️ *Promo aplicada:* ${promoTitle}`;
+  if (promoPrice) {
+    text += ` — *Precio promo: ${promoPrice}*`;
+  }
 
   const encodedText = encodeURIComponent(text);
   const whatsappUrl = `https://wa.me/51913952019?text=${encodedText}`;
