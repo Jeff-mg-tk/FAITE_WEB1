@@ -10,15 +10,15 @@
   "lang": "es-PE",
   "icons": [
     {
-      "src": "./assets/logo_simbolo.png",
+      "src": "./assets/pwa-icon.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "./assets/favicon.png",
+      "src": "./assets/pwa-icon.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     }
   ],
